@@ -1,14 +1,22 @@
 {
-  "name": "juspayproject",
+  "name": "project-sensei",
   "version": "1.0.0",
-  "description": "project-sensei code",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.js -e js,ejs,html"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpana02/Project-sensei.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpana02/Project-sensei/issues"
+  },
+  "homepage": "https://github.com/alpana02/Project-sensei#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
@@ -16,5 +24,8 @@
     "hbs": "^4.2.0",
     "mongoose": "^6.0.13",
     "multer": "^1.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
