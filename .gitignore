@@ -1,5 +1,5 @@
-/.vs/
-        node_modules/
-        package-lock.json
-        uploads
+/.vs
+        /node_modules
+        /package-lock.json
+        /uploads
 
