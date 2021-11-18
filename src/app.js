@@ -1,32 +1,44 @@
 const express=require('express');
 const app=express();
 const path=require("path");
-const hbs=require("hbs");
 const fs = require("fs");
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/usersdb";
+const MongoClient = require('mongodb').MongoClient;
+const multer = require('multer');
 
+require('dotenv/config');
 require("./db/conn");
 
 const RegisterSchema=require('./models/registers');
+
+
+const url = process.env.MONGO_URL;
 const port=process.env.PORT || 3000;
 
 const static_path=path.join(__dirname,"../public");
 const template_path=path.join(__dirname,"../templates/views");
-const partials_path=path.join(__dirname,"../templates/partials");
+//const partials_path=path.join(__dirname,"../templates/partials");
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 app.use(express.static(static_path));
-app.set("view engine","hbs");
+app.set("view engine","ejs");
 app.set("views",template_path);
-hbs.registerPartials(partials_path);
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+const upload = multer({ storage: storage });
+
 
 app.get('/',(req,res)=>{
     res.render("index")
 });
-
 app.get('/signupmentee',(req,res)=>{
     res.render("signupmentee");
 });
@@ -65,7 +77,6 @@ MongoClient.connect(url, function(err, db) {
     dbo.collection("registers").find(query).toArray(function(err, result) {
       if (err) throw err;
       console.log(result);
-    // res.status(201).send(result);
      res.status(201).render('index');
       db.close();
     });
@@ -75,8 +86,9 @@ MongoClient.connect(url, function(err, db) {
     res.status(400).send(error);
 }
 });
+
 //create new user in db for mentor
-app.post('/registermentor',async(req,res)=>{
+app.post('/registermentor', upload.single('image'),async(req,res)=>{
     try {
     const registeruser=await new RegisterSchema({
         name:req.body.name,
@@ -87,7 +99,11 @@ app.post('/registermentor',async(req,res)=>{
         interest:req.body.interest.split(","),
         work:req.body.work,
         company:req.body.company,
-        experience:req.body.experience
+        experience:req.body.experience,
+        img: {
+            data: fs.readFileSync(path.join(__dirname , `../uploads/${req.file.filename}` )),
+            contentType: 'image/png'
+        }
     });
     registeruser.save();
     console.log(registeruser.interest);

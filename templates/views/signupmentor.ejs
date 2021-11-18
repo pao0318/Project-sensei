@@ -62,7 +62,7 @@
                     <p class="mb-0">Enter your email and password to register</p>
                   </div>
                   <div class="card-body">
-                    <form role="form" action="/registermentee" method="POST">
+                    <form role="form" action="/registermentor" method="POST" enctype="multipart/form-data">
                       <div class="input-group input-group-outline mb-3">
                         <input type="text" class="form-control" placeholder="Name" name="name" value=""/>
                       </div>
@@ -82,8 +82,22 @@
                         <input type="text" class="form-control" placeholder="Phone" name="phone" value=""/>
                       </div>
                       <div class="input-group input-group-outline mb-3">
-                        <input type="text" class="form-control" placeholder="Interest" name="interest" value=""/>
+                        <input type="text" class="form-control" placeholder="Add tags that define you" name="interest" value=""/>
                       </div>
+                      <div class="input-group input-group-outline mb-3">
+                        <input type="text" class="form-control" placeholder="Work Profile" name="work" value=""/>
+                      </div>
+                       <div class="input-group input-group-outline mb-3">
+                        <input type="text" class="form-control" placeholder="Company Name" name="company" value=""/>
+                      </div>
+                       <div class="input-group input-group-outline mb-3">
+                        <input type="text" class="form-control" placeholder="Experience (in years)" name="experience" value=""/>
+                      </div>
+                      <div>
+                        <label for="image">Upload Image</label>
+                        <input type="file" id="image"  class="form-control" 
+                               name="image" value="" required>
+                    </div>
                       <div class="form-check form-check-info text-start ps-0">
                         <input
                           class="form-check-input"
@@ -132,7 +146,8 @@
     <script>
       var win = navigator.platform.indexOf('Win') > -1; if (win &&
       document.querySelector('#sidenav-scrollbar')) { var options = { damping:
-      '0.5' } Scrollbar.init(document.querySelector('#sidenav-scrollbar'),
+      '0.5' }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'),
       options); }
     </script>
     <!-- Github buttons -->

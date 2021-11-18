@@ -32,6 +32,11 @@ const userSchema=new mongoose.Schema({
     },
     experience:{
         type:Number
+    },
+    img:
+    {
+        data: Buffer,
+        contentType: String
     }
 
 })
