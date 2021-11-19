@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
   img: {
     data: Buffer,
     contentType: String,
-  },
+  }
 });
 
 const docobject = new mongoose.model("Register", userSchema);

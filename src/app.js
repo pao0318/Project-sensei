@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const fs = require("fs");
-const MongoClient = require("mongodb").MongoClient;
 const multer = require("multer");
 
 require("dotenv/config");
@@ -10,7 +9,6 @@ require("./db/conn");
 
 const RegisterSchema = require("./models/registers");
 
-const url = process.env.MONGO_URL;
 const port = process.env.PORT || 3000;
 
 const static_path = path.join(__dirname, "../public");
@@ -62,28 +60,19 @@ app.post("/registermentee", async (req, res) => {
       interest: req.body.interest.split(","),
     });
     registeruser.save();
-    MongoClient.connect(url, function (err, db) {
-      if (err) throw err;
-      let dbo = db.db("usersdb");
-      const interestarray = req.body.interest.split(",");
-      let queryarr = [];
-      for (let index = 0; index < interestarray.length; index++) {
-        queryarr.push({ interest: interestarray[index] });
-      }
-      let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
-      console.log(query);
-      dbo
-        .collection("registers")
-        .find(query)
-        .toArray(function (err, result) {
-          if (err) throw err;
-          console.log(result);
-          res.status(201).render("index");
-          db.close();
-        });
-    });
+    //mentor matching query
+    const interestarray = req.body.interest.split(",");
+    let queryarr = [];
+    for (let index = 0; index < interestarray.length; index++) {
+      queryarr.push({ interest: interestarray[index] });
+    }
+    let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
+    console.log(query);
+    const promiseresult=await RegisterSchema.find(query);
+    console.log(promiseresult[0].name);
+    res.status(201).render("index");
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).render("signupmentee");
   }
 });
 
