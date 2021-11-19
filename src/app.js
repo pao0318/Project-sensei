@@ -8,6 +8,7 @@ require("dotenv/config");
 require("./db/conn");
 
 const RegisterSchema = require("./models/registers");
+const SessionSchema = require("./models/sessions");
 
 const port = process.env.PORT || 3000;
 
@@ -68,7 +69,7 @@ app.post("/registermentee", async (req, res) => {
     }
     let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
     console.log(query);
-    const promiseresult=await RegisterSchema.find(query);
+    const promiseresult = await RegisterSchema.find(query);
     console.log(promiseresult[0].name);
     res.status(201).render("index");
   } catch (error) {
@@ -127,6 +128,26 @@ app.get("/dashboard", (req, res) => {
   res.render("dashboard");
 });
 
+app.get("/createsession", (req, res) => {
+  res.render("createsession");
+});
+
+//  Create a session
+app.post("/createsession", async (req, res) => {
+  try {
+    const sessionuser = await new SessionSchema({
+      name: req.body.name,
+      date: req.body.date,
+      description: req.body.description,
+    });
+    sessionuser.save();
+    console.log(sessionuser.name);
+    res.status(201).render("index");
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 app.listen(port, () => {
-  console.log(`Listening at port http://localhost:${port}/login`);
+  console.log(`Listening at port http://127.0.0.1:${port}/login`);
 });
