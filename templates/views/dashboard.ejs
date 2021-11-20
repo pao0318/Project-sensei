@@ -40,7 +40,7 @@
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
-            <span class="nav-link-text ms-1">Create a session</span>
+            <span class="nav-link-text ms-1">Sessions</span>
           </a>
         </li>
         <li class="nav-item">
@@ -308,6 +308,41 @@
           </div>
         </div>
       </div>
+      <!-- Added scripts by Alpana for cards -->
+    </div><br/>
+    <div class="container">
+      <div class="row ">
+        <div class="col col-lg-4">
+          <div class="dropdown">
+            <select class="form-select" aria-label="Default select example" style="padding-left: 20px;border-color: black;">
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+        <div class="col col-lg-2">
+          <button type="button" class="btn btn-dark">Search</button>
+        </div>
+      </div>
+    </div><br/>
+    <div class="container">
+      <div class="row">
+        <% for (let i =0;i<blogs.length;i++) { %>
+              <div class="col-4 col-md-4"><div class="card" style="width: 23rem; display: flex; margin-bottom: 20px;">
+                <img src='data:image/png;base64,<%= blogs[i].img.data.toString('base64') %>' class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= blogs[i].name %></h5>
+                  <p class="card-text">Specialization : <%= blogs[i].interest %></p>
+                  <a href="#" class="btn btn-primary">View Profile</a>
+                </div>
+              </div></div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- End of the script -->
       <footer class="footer py-4  ">
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">

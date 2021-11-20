@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const fs = require("fs");
-const multer = require("multer");
+var multer = require("multer");
+const axios = require("axios");
 
 require("dotenv/config");
 require("./db/conn");
@@ -23,15 +24,15 @@ app.use(express.static(static_path));
 app.set("view engine", "ejs");
 app.set("views", template_path);
 
-const storage = multer.diskStorage({
+let storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
   },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
+  filename: function (req, file, cb) {
+    cb(null, "Photo" + "_" + Date.now() + path.extname(file.originalname));
   },
 });
-const upload = multer({ storage: storage });
+var upload = multer({ storage: storage });
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -80,6 +81,7 @@ app.post("/registermentee", async (req, res) => {
 //create new user in db for mentor
 app.post("/registermentor", upload.single("image"), async (req, res) => {
   try {
+    console.log("reached before data image");
     const registeruser = await new RegisterSchema({
       name: req.body.name,
       password: req.body.password,
@@ -97,7 +99,9 @@ app.post("/registermentor", upload.single("image"), async (req, res) => {
         contentType: "image/png",
       },
     });
+    console.log("reached after data image");
     registeruser.save();
+    console.log("koi error nhi aaya");
     console.log(registeruser.interest);
     res.status(201).render("index");
   } catch (error) {
@@ -125,11 +129,13 @@ app.post("/login", async (req, res) => {
 
 //dashboard render
 app.get("/dashboard", (req, res) => {
-  res.render("dashboard");
-});
-
-app.get("/createsession", (req, res) => {
-  res.render("createsession");
+  RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
+    res.render("dashboard", { blogs: RegisterSchema });
+    //Jimp.read(RegisterSchema, (err, res) => {
+    //  if (err) throw new Error(err);
+    //  res.quality(5).write("resized.jpg");
+    //});
+  });
 });
 
 //  Create a session
@@ -146,6 +152,12 @@ app.post("/createsession", async (req, res) => {
   } catch (error) {
     res.status(400).send(error);
   }
+});
+
+app.get("/createsession", function (req, res) {
+  SessionSchema.find({ name: "Dancer" }, function (err, data) {
+    res.render("createsession", { session: data });
+  });
 });
 
 app.listen(port, () => {
