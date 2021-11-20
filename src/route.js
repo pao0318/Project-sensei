@@ -6,13 +6,14 @@ const multer = require("multer");
 
 require("dotenv/config");
 const RegisterSchema = require("./models/registers");
+const SessionSchema = require("./models/sessions");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
+    cb(null, "Photo" + "_" + Date.now() + path.extname(file.originalname));
   },
 });
 const upload = multer({ storage: storage });
@@ -23,7 +24,9 @@ router.get("/", (req, res) => {
       res.render("sign-in",{created:""});
 		}else{
 			console.log("found sesion");
-      res.render("index");
+      RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
+        res.render("index", { blogs: RegisterSchema });
+      });
 		}
 });
 });
@@ -92,18 +95,18 @@ router.post("/registermentor", upload.single("image"), async (req, res) => {
         ),
         contentType: "image/png",
       },
+      
     });
-    registeruser.save();
-    console.log(registeruser.name);
     registeruser.save(function (err, Person) {
       if (err){
       console.log(err);
       res.render("signupmentor");
       }
-      else console.log("Success signup mentor");
+      else {
+        console.log("Success signup mentor");
+       res.status(201).render("sign-in",{created:"Account created succesfully!"});
+      }
     });
-    res.status(201).render("sign-in",{created:"Account created succesfully!"});
-
 
   } catch (error) {
     res.status(400).send(error);
@@ -139,8 +142,10 @@ router.get("/dashboard", (req, res) => {
 		if(!data){
       res.render("sign-in",{created:""});
 		}else{
-			console.log("found session");
-      res.render("dashboard");
+		 console.log("found session");
+      RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
+        res.render("index", { blogs: RegisterSchema });
+      });
 		}
 });
 });
@@ -160,6 +165,42 @@ console.log("inside profile");
 		}
 	});
 });
+
+//sid change
+
+
+//  Create a session
+router.post("/createsession", async (req, res) => {
+	RegisterSchema.findOne({_id:req.session.userId},async function(err,data){
+		if(!data){
+      res.render("sign-in",{created:""});
+		}else{  
+    const sessionuser = await new SessionSchema({
+      name: req.body.name,
+      date: req.body.date,
+      description: req.body.description,
+    });
+    sessionuser.save();
+    console.log(sessionuser.name);
+    res.status(201).redirect("/createsession");
+  }
+});
+});
+
+router.get("/createsession", function (req, res) {
+  RegisterSchema.findOne({_id:req.session.userId},function(err,data){
+		if(!data){
+      res.render("sign-in",{created:""});
+		}else{ 
+  SessionSchema.find({}, function (err, data) {
+    if(err) res.redirect("/");
+    res.render("createsession", { session: data });
+  });
+}
+});
+});
+//sid ends
+
 // logout
 router.get('/logout',(req,res) => {
   req.session.destroy();

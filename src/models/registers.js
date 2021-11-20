@@ -36,8 +36,10 @@ const userSchema = new mongoose.Schema({
   img: {
     data: Buffer,
     contentType: String,
-  }
+  },
+  sessions: {
+    type: [String],
+  },
 });
 
-const docobject = new mongoose.model("Register", userSchema);
-module.exports = docobject;
+module.exports = mongoose.model("Register", userSchema);

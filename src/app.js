@@ -7,6 +7,9 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo');
 
+
+const port = process.env.PORT || 3000;
+
 const static_path = path.join(__dirname, "../public");
 const template_path = path.join(__dirname, "../templates/views");
 
@@ -57,13 +60,6 @@ app.use(function (req, res, next) {
   next(err);
 });
 
-// error handler
-// define as the last app.use callback
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.send(err.message);
-});
-const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Listening at port http://localhost:${port}/`);
 });
