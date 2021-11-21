@@ -55,9 +55,9 @@ app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Ooops!! Requested Pasge Not Found');
+  var err = res.send('Ooops!! Requested Pasge Not Found');
   err.status = 404;
-  next(err);
+  // next(err);
 });
 
 app.listen(port, () => {

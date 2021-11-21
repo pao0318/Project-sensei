@@ -24,8 +24,9 @@ router.get("/", (req, res) => {
       res.render("sign-in",{created:""});
 		}else{
 			console.log("found sesion");
-      RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
-        res.render("index", { blogs: RegisterSchema });
+      RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
+       if(err) console.log(err);
+       res.render("index", { blogs: valuefound });
       });
 		}
 });
@@ -122,8 +123,10 @@ router.post("/login", async (req, res,next) => {
     const useremail = await RegisterSchema.findOne({ email: email });
     if (useremail.password === password) {
       req.session.userId = useremail._id;
-      console.log(useremail.name);
-      res.render("index");
+      RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
+        if(!valuefound) ("index",{blogs: []});
+        res.render("index", { blogs: valuefound });
+      });
     } else {
       console.log("invalid password");
       res.render("sign-in",{created:""});
@@ -143,8 +146,9 @@ router.get("/dashboard", (req, res) => {
       res.render("sign-in",{created:""});
 		}else{
 		 console.log("found session");
-      RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
-        res.render("index", { blogs: RegisterSchema });
+      RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
+        if(!valuefound) ("index",{blogs: []});
+        res.render("index", { blogs: valuefound });
       });
 		}
 });
@@ -193,8 +197,8 @@ router.get("/createsession", function (req, res) {
       res.render("sign-in",{created:""});
 		}else{ 
   SessionSchema.find({}, function (err, data) {
-    if(err) res.redirect("/");
-    res.render("createsession", { session: data });
+    if(!data) res.render("createsession", { session: [] });
+    else res.render("createsession", { session: data });
   });
 }
 });
