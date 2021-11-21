@@ -94,56 +94,11 @@
           <h6 class="font-weight-bolder mb-0">Dashboard</h6><br/>
           <h1 class="font-weight-bolder mb-0">Learn and Grow with help</h1>
           <h1 class="font-weight-bolder mb-0">from <span style="color: blue;">world-class mentors</span></h1>
-          <h4 class="mb-0" style="font-weight: lighter;margin-top: 20px;">Discover the world’s top mentors</h4><br/><br/>
+          <h4 class="mb-0" style="font-weight: lighter;margin-top: 20px;">Discover the world’s top mentors</h4>
         </nav>
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container">
-      <div class="row ">
-        <div class="col col-lg-4">
-          <div class="dropdown">
-            <select class="form-select" aria-label="Default select example" style="padding-left: 20px;border-color: black;">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-        </div>
-        <div class="col col-lg-2">
-          <button type="button" class="btn btn-dark">Search</button>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm"><div class="card">
-          <img src="..\assets\img\bg-smart-home-1.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div></div>
-        <div class="col-sm"><div class="card">
-          <img src="..\assets\img\bg-smart-home-1.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div></div>
-        <div class="col-sm"><div class="card">
-          <img src="..\assets\img\bg-smart-home-1.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div></div>
-        <div class="col-sm"><div class="card">
-          <img src="..\assets\img\bg-smart-home-1.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div></div>
-      </div>
-    </div>
       <div class="col-12 mt-4" style="background-color: black;padding: 20px;color:white">
         <div class="mb-5 ps-3">
           <h4 class="mb-1" style="color:white">Weekly sessions</h4>
@@ -323,7 +278,11 @@
       <div class="row">
         <% for (let i =0;i<blogs.length;i++) { %>
               <div class="col-4 col-md-4"><div class="card" style="width: 23rem; display: flex; margin-bottom: 20px;">
-                <img src='data:image/png;base64,<%= blogs[i].img.data.toString('base64') %>' class="card-img-top" alt="..." />
+                <img src='data:image/png;base64,<%= blogs[i].img.data.toString('base64') %>' class="card-img-top" alt="..." style="
+                  width: 368px;
+                  height: 300px;
+                  object-position: center;
+                  object-fit: cover;"/>
                 <div class="card-body">
                   <h5 class="card-title"><%= blogs[i].name %></h5>
                   <p class="card-text">Specialization : <%= blogs[i].interest %></p>

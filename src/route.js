@@ -115,7 +115,7 @@ router.post("/registermentor", upload.single("image"), async (req, res) => {
 });
 
 // Login check
-router.post("/login", async (req, res,next) => {
+router.post("/login", async (req, res, next) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
@@ -123,23 +123,28 @@ router.post("/login", async (req, res,next) => {
     const useremail = await RegisterSchema.findOne({ email: email });
     if (useremail.password === password) {
       req.session.userId = useremail._id;
+<<<<<<< Updated upstream
       RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
         if(!valuefound) ("index",{blogs: []});
         res.render("index", { blogs: valuefound });
+=======
+      RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
+        res.render("index", { blogs: RegisterSchema });
+>>>>>>> Stashed changes
       });
     } else {
       console.log("invalid password");
-      res.render("sign-in",{created:""});
+      res.render("sign-in", { created: "" });
     }
   } catch (error) {
     console.log("email not register");
-    res.render("sign-in",{created:""});
-
+    res.render("sign-in", { created: "" });
   }
 });
 
 
 //dashboard render
+<<<<<<< Updated upstream
 router.get("/dashboard", (req, res) => {
   RegisterSchema.findOne({_id:req.session.userId},function(err,data){
 		if(!data){
@@ -153,6 +158,20 @@ router.get("/dashboard", (req, res) => {
 		}
 });
 });
+=======
+// router.get("/index", (req, res) => {
+//   RegisterSchema.findOne({_id:req.session.userId},function(err,data){
+// 		if(!data){
+//       res.render("sign-in",{created:""});
+// 		}else{
+// 		 console.log("found session");
+//       RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
+//         res.render("index", { blogs: RegisterSchema });
+//       });
+// 		}
+// });
+// });
+>>>>>>> Stashed changes
 
 //profile render
 router.get("/profilementee", (req, res) => {
