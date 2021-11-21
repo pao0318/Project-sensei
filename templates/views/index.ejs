@@ -106,154 +106,45 @@
           <p class="text-sm">Architects design houses</p>
         </div>
         <div class="row">
-          <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-            <div class="card card-blog card-plain">
-              <div class="card-header p-0 mt-n4 mx-3">
-                <a class="d-block shadow-xl border-radius-xl">
-                  <img src="img/home-decor-1.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                </a>
-              </div>
-              <div class="card-body p-3">
-                <p class="mb-0 text-sm">Project #2</p>
-                <a href="javascript:;">
-                  <h5>
-                    Modern
-                  </h5>
-                </a>
-                <p class="mb-4 text-sm">
-                  As Uber works through a huge amount of internal management turmoil.
-                </p>
-                <div class="d-flex align-items-center justify-content-between">
-                  <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
-                  <div class="avatar-group mt-2">
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                      <img alt="Image placeholder" src="img/team-1.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                      <img alt="Image placeholder" src="img/team-2.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                      <img alt="Image placeholder" src="img/team-3.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                      <img alt="Image placeholder" src="img/team-4.jpg">
-                    </a>
+          <% for (let i =0;i<weekly_session.length;i++) { %>
+            <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+              <div class="card card-blog card-plain">
+                <div class="card-header p-0 mt-n4 mx-3">
+                  <a class="d-block shadow-xl border-radius-xl">
+                    <img src="img/home-decor-1.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                  </a>
+                </div>
+                <div class="card-body p-3">
+                  <p class="mb-0 text-sm"><%= weekly_session[i].name %></p>
+                  <a href="javascript:;">
+                    <h5>
+                      <%= weekly_session[i].name %>
+                    </h5>
+                  </a>
+                  <p class="mb-4 text-sm">
+                    <%= weekly_session[i].description %>
+                  </p>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-outline-primary btn-sm mb-0 bg-primary" style="color: white;">Enroll Session</button>
+                    <div class="avatar-group mt-2">
+                      <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
+                        <img alt="Image placeholder" src="img/team-1.jpg">
+                      </a>
+                      <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
+                        <img alt="Image placeholder" src="img/team-2.jpg">
+                      </a>
+                      <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
+                        <img alt="Image placeholder" src="img/team-3.jpg">
+                      </a>
+                      <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
+                        <img alt="Image placeholder" src="img/team-4.jpg">
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-            <div class="card card-blog card-plain">
-              <div class="card-header p-0 mt-n4 mx-3">
-                <a class="d-block shadow-xl border-radius-xl">
-                  <img src="img/home-decor-2.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
-                </a>
-              </div>
-              <div class="card-body p-3">
-                <p class="mb-0 text-sm">Project #1</p>
-                <a href="javascript:;">
-                  <h5>
-                    Scandinavian
-                  </h5>
-                </a>
-                <p class="mb-4 text-sm">
-                  Music is something that every person has his or her own specific opinion about.
-                </p>
-                <div class="d-flex align-items-center justify-content-between">
-                  <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
-                  <div class="avatar-group mt-2">
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                      <img alt="Image placeholder" src="img/team-3.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                      <img alt="Image placeholder" src="img/team-4.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                      <img alt="Image placeholder" src="img/team-1.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                      <img alt="Image placeholder" src="img/team-2.jpg">
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-            <div class="card card-blog card-plain">
-              <div class="card-header p-0 mt-n4 mx-3">
-                <a class="d-block shadow-xl border-radius-xl">
-                  <img src="img/home-decor-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                </a>
-              </div>
-              <div class="card-body p-3">
-                <p class="mb-0 text-sm">Project #3</p>
-                <a href="javascript:;">
-                  <h5>
-                    Minimalist
-                  </h5>
-                </a>
-                <p class="mb-4 text-sm">
-                  Different people have different taste, and various types of music.
-                </p>
-                <div class="d-flex align-items-center justify-content-between">
-                  <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
-                  <div class="avatar-group mt-2">
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                      <img alt="Image placeholder" src="img/team-4.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                      <img alt="Image placeholder" src="img/team-3.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                      <img alt="Image placeholder" src="img/team-2.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                      <img alt="Image placeholder" src="img/team-1.jpg">
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-            <div class="card card-blog card-plain">
-              <div class="card-header p-0 mt-n4 mx-3">
-                <a class="d-block shadow-xl border-radius-xl">
-                  <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                </a>
-              </div>
-              <div class="card-body p-3">
-                <p class="mb-0 text-sm">Project #4</p>
-                <a href="javascript:;">
-                  <h5>
-                    Gothic
-                  </h5>
-                </a>
-                <p class="mb-4 text-sm">
-                  Why would anyone pick blue over pink? Pink is obviously a better color.
-                </p>
-                <div class="d-flex align-items-center justify-content-between">
-                  <button type="button" class="btn btn-outline-primary btn-sm mb-0">View Project</button>
-                  <div class="avatar-group mt-2">
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
-                      <img alt="Image placeholder" src="img/team-4.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
-                      <img alt="Image placeholder" src="img/team-3.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
-                      <img alt="Image placeholder" src="img/team-2.jpg">
-                    </a>
-                    <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
-                      <img alt="Image placeholder" src="img/team-1.jpg">
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <% } %>
         </div>
       </div>
       <!-- Added scripts by Alpana for cards -->
@@ -280,12 +171,13 @@
         </div>
       </div>
     </div><br/>
-
+    <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+    <button class="btn" onclick="filterSelection('Development')"> Development</button>
     <div class="container">
       <div class="row">
         <% for (let i =0;i<blogs.length;i++) { %>
-              <div class="col-3 col-md-3 d-flex  align-items-stretch">
-                <div class="card" style="width: 23rem; margin-bottom: 20px;">
+          <div class="col-3 col-md-3 d-flex  align-items-stretch">
+            <div class="card" style="width: 23rem; margin-bottom: 20px;">
                 <img src='data:image/png;base64,<%= blogs[i].img.data.toString('base64') %>' class="card-img-top" alt="..." style="
                   width: 285px;
                   height: 300px;
@@ -333,6 +225,50 @@
   <script src="js/plugins/perfect-scrollbar.min.js"></script>
   <script src="js/plugins/smooth-scrollbar.min.js"></script>
   <script src="js/plugins/chartjs.min.js"></script>
+  <script>
+    filterSelection("all")
+    function filterSelection(c) {
+      var x, i;
+      x = document.getElementsByClassName("filterDiv");
+      if (c == "all") c = "";
+      for (i = 0; i < x.length; i++) {
+        w3RemoveClass(x[i], "show");
+        if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+      }
+    }
+    
+    function w3AddClass(element, name) {
+      var i, arr1, arr2;
+      arr1 = element.className.split(" ");
+      arr2 = name.split(" ");
+      for (i = 0; i < arr2.length; i++) {
+        if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+      }
+    }
+    
+    function w3RemoveClass(element, name) {
+      var i, arr1, arr2;
+      arr1 = element.className.split(" ");
+      arr2 = name.split(" ");
+      for (i = 0; i < arr2.length; i++) {
+        while (arr1.indexOf(arr2[i]) > -1) {
+          arr1.splice(arr1.indexOf(arr2[i]), 1);     
+        }
+      }
+      element.className = arr1.join(" ");
+    }
+    
+    // Add active class to the current button (highlight it)
+    var btnContainer = document.getElementById("myBtnContainer");
+    var btns = btnContainer.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function(){
+        var current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+      });
+    }
+    </script>    
   <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
 

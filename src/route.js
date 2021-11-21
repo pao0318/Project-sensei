@@ -26,7 +26,12 @@ router.get("/", (req, res) => {
 			console.log("found sesion");
       RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
        if(err) console.log(err);
-       res.render("index", { blogs: valuefound });
+       else
+       {
+         SessionSchema.find({ role: "mentor" }, function (err, weekly_sessionfound){
+         res.render("index", { blogs: valuefound, weekly_session: weekly_sessionfound });
+         })
+       }
       });
 		}
 });
@@ -104,6 +109,8 @@ router.post("/registermentor", upload.single("image"), async (req, res) => {
   }
 });
 
+
+
 // Login check
 router.post("/login", async (req, res, next) => {
   try {
@@ -114,8 +121,13 @@ router.post("/login", async (req, res, next) => {
     if (useremail.password === password) {
       req.session.userId = useremail._id;
       RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
-        if(!valuefound) ("index",{blogs: []});
-        res.render("index", { blogs: valuefound });
+        if(!valuefound) res.render("index",{blogs: [], weekly_session: []});
+        else
+       {
+         SessionSchema.find({ role: "mentor" }, function (err, weekly_sessionfound){
+         res.render("index", { blogs: valuefound, weekly_session: weekly_sessionfound });
+         })
+       }
       });
     } else {
       console.log("invalid password");
