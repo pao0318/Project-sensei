@@ -44,16 +44,6 @@ router.get("/signupbtn", (req, res) => {
 //create new user in db for mentee
 router.post("/registermentee", async (req, res) => {
   try {
-    // //mentor matching query
-    // const interestarray = req.body.interest.split(",");
-    // let queryarr = [];
-    // for (let index = 0; index < interestarray.length; index++) {
-    //   queryarr.push({ interest: interestarray[index] });
-    // }
-    // // let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
-    // // console.log(query);
-    // // const promiseresult=await RegisterSchema.find(query);
-    // // console.log(promiseresult[0].name);
     var newPerson = new RegisterSchema({
       name: req.body.name,
       password: req.body.password,
@@ -123,14 +113,9 @@ router.post("/login", async (req, res, next) => {
     const useremail = await RegisterSchema.findOne({ email: email });
     if (useremail.password === password) {
       req.session.userId = useremail._id;
-<<<<<<< Updated upstream
       RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
         if(!valuefound) ("index",{blogs: []});
         res.render("index", { blogs: valuefound });
-=======
-      RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
-        res.render("index", { blogs: RegisterSchema });
->>>>>>> Stashed changes
       });
     } else {
       console.log("invalid password");
@@ -144,7 +129,6 @@ router.post("/login", async (req, res, next) => {
 
 
 //dashboard render
-<<<<<<< Updated upstream
 router.get("/dashboard", (req, res) => {
   RegisterSchema.findOne({_id:req.session.userId},function(err,data){
 		if(!data){
@@ -158,20 +142,6 @@ router.get("/dashboard", (req, res) => {
 		}
 });
 });
-=======
-// router.get("/index", (req, res) => {
-//   RegisterSchema.findOne({_id:req.session.userId},function(err,data){
-// 		if(!data){
-//       res.render("sign-in",{created:""});
-// 		}else{
-// 		 console.log("found session");
-//       RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
-//         res.render("index", { blogs: RegisterSchema });
-//       });
-// 		}
-// });
-// });
->>>>>>> Stashed changes
 
 //profile render
 router.get("/profilementee", (req, res) => {
@@ -188,9 +158,6 @@ console.log("inside profile");
 		}
 	});
 });
-
-//sid change
-
 
 //  Create a session
 router.post("/createsession", async (req, res) => {
@@ -222,7 +189,29 @@ router.get("/createsession", function (req, res) {
 }
 });
 });
-//sid ends
+
+//mentormatching
+router.get("/matchmentor",(req,res)=>{
+  RegisterSchema.findOne({_id:req.session.userId},function(err,data){
+		if(!data){
+      res.render("sign-in",{created:""});
+		}else{
+		 console.log("found session");
+    // //mentor matching query
+    const interestarray = data.interest;
+    let queryarr = [];
+    for (let index = 0; index < interestarray.length; index++) {
+      queryarr.push({ interest: interestarray[index] });
+    }
+    let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
+    //console.log(query);
+      RegisterSchema.find(query, function (err, valuefound) {
+        if(!valuefound) ("matchmentor",{blogs: []});
+        res.render("matchmentor", { blogs: valuefound });
+      });
+		}
+});
+});
 
 // logout
 router.get('/logout',(req,res) => {
