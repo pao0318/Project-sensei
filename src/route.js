@@ -129,19 +129,18 @@ router.post("/login", async (req, res, next) => {
 
 
 //dashboard render
-router.get("/dashboard", (req, res) => {
-  RegisterSchema.findOne({_id:req.session.userId},function(err,data){
-		if(!data){
-      res.render("sign-in",{created:""});
-		}else{
-		 console.log("found session");
-      RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
-        if(!valuefound) ("index",{blogs: []});
-        res.render("index", { blogs: valuefound });
-      });
-		}
-});
-});
+// router.get("/index", (req, res) => {
+//   RegisterSchema.findOne({_id:req.session.userId},function(err,data){
+// 		if(!data){
+//       res.render("sign-in",{created:""});
+// 		}else{
+// 		 console.log("found session");
+//       RegisterSchema.find({ role: "mentor" }, function (err, RegisterSchema) {
+//         res.render("index", { blogs: RegisterSchema });
+//       });
+// 		}
+// });
+// });
 
 //profile render
 router.get("/profilementee", (req, res) => {
