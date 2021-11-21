@@ -28,7 +28,7 @@ router.get("/", (req, res) => {
        if(err) console.log(err);
        else
        {
-         SessionSchema.find({ role: "mentor" }, function (err, weekly_sessionfound){
+         SessionSchema.find({}, function (err, weekly_sessionfound){
          res.render("index", { blogs: valuefound, weekly_session: weekly_sessionfound });
          })
        }
@@ -36,6 +36,15 @@ router.get("/", (req, res) => {
 		}
 });
 });
+
+
+router.get("/viewprofile", (req, res) => {
+  res.render("viewprofile");
+});
+router.post('/viewprofile', (req,res)=>{
+  console.log("Deleted button has been clicked: "+ req.body.buttonId)
+  })
+
 router.get("/signupmentee", (req, res) => {
   res.render("signupmentee");
 });
@@ -45,6 +54,7 @@ router.get("/signupmentor", (req, res) => {
 router.get("/signupbtn", (req, res) => {
   res.render("signupbtn");
 });
+
 
 //create new user in db for mentee
 router.post("/registermentee", async (req, res) => {
@@ -217,12 +227,35 @@ router.get("/matchmentor",(req,res)=>{
     let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
     //console.log(query);
       RegisterSchema.find(query, function (err, valuefound) {
-        if(!valuefound) ("matchmentor",{blogs: []});
+        if(!valuefound) res.render("matchmentor",{blogs: []});
         res.render("matchmentor", { blogs: valuefound });
       });
 		}
 });
 });
+
+//filter for metee page
+router.post("/filter",(req,res)=>{
+  RegisterSchema.findOne({_id:req.session.userId},function(err,data){
+		if(!data){
+      res.render("sign-in",{created:""});
+		}
+    else{
+      let query = { $and: [{ interest: req.body.name } , { role: "mentor" }] };
+			console.log("found sesion");
+      RegisterSchema.find(query, function (err, valuefound) {
+       if(err) console.log(err);
+       else
+       {
+         SessionSchema.find({}, function (err, weekly_sessionfound){
+         res.render("index", { blogs: valuefound, weekly_session: weekly_sessionfound });
+         })
+       }
+      });
+		}
+  });
+})
+
 
 // logout
 router.get('/logout',(req,res) => {

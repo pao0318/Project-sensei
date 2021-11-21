@@ -105,7 +105,7 @@
                   <a class="d-block shadow-xl border-radius-xl">
                     <% if ( weekly_session[i].name.toLowerCase() == "web-dev" || weekly_session[i].name.toLowerCase() == "competetive" || weekly_session[i].name.toLowerCase() == "machine learning") { %>
                     <img src="img/img-1.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                  <% } else if ( weekly_session[i].name.toLowerCase() == "design" || weekly_session[i].name.toLowerCase() == "ui-ux" || weekly_session[i].name.toLowerCase() == "industrial design") { %>
+                  <% } else if ( weekly_session[i].name.toLowerCase() == "design" || weekly_session[i].name.toLowerCase() == "ui-ux") { %>
                     <img src="img/img-2.png" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
                   <% } else { %>
                     <img src="img/img-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
@@ -151,26 +151,17 @@
       
       <div class="row ">
         <h4 class="mb-3 text-dark" style="margin-top: 20px;">Discover the world’s top mentors</h4>
-        <div class="col col-lg-4">
-          <div class="dropdown">
-            <select class="form-select" aria-label="Default select example" style="padding-left: 20px;border-color: black;">
-              <option selected>Filter tags for searching metors</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+        <form class="row row-cols-lg-auto g-3 align-items-center" action="/filter" method="POST">  
+          <div class="input-group-md input-group-outline mb-3" style="border-color: black;">
+            <input type="text" class="col col-lg-4 form-control" placeholder="Add tags to filter Mentors" name="name" value=""/>
           </div>
+          <button type="submit" class="col col-lg-1 btn bg-gradient-primary my-auto">Search</button>
+          <div class="col col-lg-8">
+            <a href="/matchmentor" class="btn btn-primary my-auto">Find mentor match</a>
+            </div>
         </div>
-        <div class="col col-lg-5">
-          <button type="button" class="btn btn-dark">Search</button>
-        </div>
-        <div class="col col-lg-2">
-        <a href="/matchmentor" class="btn btn-primary">Find mentor match</a>
-        </div>
-      </div>
+        </form>
     </div><br/>
-    <button class="btn active" onclick="filterSelection('all')"> Show all</button>
-    <button class="btn" onclick="filterSelection('Development')"> Development</button>
     <div class="container">
       <div class="row">
         <% for (let i =0;i<blogs.length;i++) { %>
@@ -187,14 +178,12 @@
                   <p class="card-text mb-0"><b>Work Profile : </b><%= blogs[i].work %> at <%= blogs[i].company %></p>
                   <p class="card-text mb-0"><b>Experience : </b><%= blogs[i].experience %> year</p>
                   <p>
-                  <b>Interets: </b>
+                  <b>Interests: </b>
                    <% for(let j=0;j< blogs[i].interest.length;j++){ %>
                     <span class="badge-md badge-pill text-dark" style="background-color:#fda9c5;color: black; padding: 5px;border-radius: 10px;display: inline-block;margin-top: 10px;margin-right: 5px;"><%= blogs[i].interest[j] %></span>
                  <% } %>
                   </p>
-                  <a>
-                  <button class="btn btn-primary mx-auto d-block mt-lg-2"  href="#">View Profile</button>
-                </a>
+                  <button class="btn btn-primary mx-auto d-block mt-lg-2" onclick="deleting('<%= blogs[i]._id %>')">View Profile</button>              
                 </div>
               </div></div>
         <% } %>
@@ -222,51 +211,23 @@
   <script src="js/core/bootstrap.min.js"></script>
   <script src="js/plugins/perfect-scrollbar.min.js"></script>
   <script src="js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="js/plugins/chartjs.min.js"></script>
+  <script src="js/plugins/chartjs.min.js"></script>    
   <script>
-    filterSelection("all")
-    function filterSelection(c) {
-      var x, i;
-      x = document.getElementsByClassName("filterDiv");
-      if (c == "all") c = "";
-      for (i = 0; i < x.length; i++) {
-        w3RemoveClass(x[i], "show");
-        if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
-      }
+    function deleting(value){
+      console.log(value)
+fetch('/viewfiles', { method: 'POST', data: {buttonId: value} })
+  .then(function (response) {
+    if (response.ok) {
+      console.log('Delete was recorded')
+      return
     }
-    
-    function w3AddClass(element, name) {
-      var i, arr1, arr2;
-      arr1 = element.className.split(" ");
-      arr2 = name.split(" ");
-      for (i = 0; i < arr2.length; i++) {
-        if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
-      }
-    }
-    
-    function w3RemoveClass(element, name) {
-      var i, arr1, arr2;
-      arr1 = element.className.split(" ");
-      arr2 = name.split(" ");
-      for (i = 0; i < arr2.length; i++) {
-        while (arr1.indexOf(arr2[i]) > -1) {
-          arr1.splice(arr1.indexOf(arr2[i]), 1);     
-        }
-      }
-      element.className = arr1.join(" ");
-    }
-    
-    // Add active class to the current button (highlight it)
-    var btnContainer = document.getElementById("myBtnContainer");
-    var btns = btnContainer.getElementsByClassName("btn");
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener("click", function(){
-        var current = document.getElementsByClassName("active");
-        current[0].className = current[0].className.replace(" active", "");
-        this.className += " active";
-      });
-    }
-    </script>    
+    throw new Error('Request failed.')
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
+}
+  </script>
   <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
 
