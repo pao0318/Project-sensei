@@ -5,7 +5,8 @@ const fs = require("fs");
 const multer = require("multer");
 const Razorpay = require("razorpay");
 var env = require("dotenv/config");
-
+var enrolledmentor="";
+var enrolledmentee="";
 const razorpay = new Razorpay({
   key_id: process.env.KEY_ID,
   key_secret: process.env.KEY_SECRET,
@@ -30,7 +31,6 @@ router.get("/", (req, res) => {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
-<<<<<<< Updated upstream
       console.log("found sesion for " + data.name);
       //mentor
       if (data.role === "mentor") {
@@ -52,20 +52,10 @@ router.get("/", (req, res) => {
           if (err) console.log(err);
           else {
             SessionSchema.find({}, function (err, weekly_sessionfound) {
-=======
-      console.log("found sesion");
-      RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
-        if (err) console.log(err);
-        else {
-          SessionSchema.find(
-            { role: "mentor" },
-            function (err, weekly_sessionfound) {
->>>>>>> Stashed changes
               res.render("index", {
                 blogs: valuefound,
                 weekly_session: weekly_sessionfound,
               });
-<<<<<<< Updated upstream
             });
           }
         });
@@ -85,6 +75,7 @@ router.get("/viewprofile/:id", async (req, res) => {
         const id = req.params.id;
         try {
           const user = await RegisterSchema.findById(id);
+          enrolledmentor=id;
           if (user) {
             res.render("viewprofile", { profileobject: user });
           } else {
@@ -96,14 +87,6 @@ router.get("/viewprofile/:id", async (req, res) => {
       }
     }
   );
-=======
-            }
-          );
-        }
-      });
-    }
-  });
->>>>>>> Stashed changes
 });
 
 //view profile pafe of a mentor from mentor
@@ -113,7 +96,8 @@ router.get("/viewprofilementor/:id", async (req, res) => {
     async function (err, data) {
       if (!data) {
         res.render("sign-in", { created: "" });
-      } else {
+      }
+       else {
         const id = req.params.id;
         try {
           const user = await RegisterSchema.findById(id);
@@ -214,7 +198,6 @@ router.post("/login", async (req, res, next) => {
     const useremail = await RegisterSchema.findOne({ email: email });
     if (useremail.password === password) {
       req.session.userId = useremail._id;
-<<<<<<< Updated upstream
       //mentor
       if (useremail.role === "mentor") {
         RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
@@ -232,11 +215,6 @@ router.post("/login", async (req, res, next) => {
       //mentee
       else {
         RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
-=======
-      RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
-        if (!valuefound) res.render("index", { blogs: [], weekly_session: [] });
-        else {
->>>>>>> Stashed changes
           SessionSchema.find(
             { role: "mentor" },
             function (err, weekly_sessionfound) {
@@ -246,13 +224,8 @@ router.post("/login", async (req, res, next) => {
               });
             }
           );
-<<<<<<< Updated upstream
         });
       }
-=======
-        }
-      });
->>>>>>> Stashed changes
     } else {
       console.log("invalid password");
       res.render("sign-in", { created: "" });
@@ -263,20 +236,13 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-<<<<<<< Updated upstream
 //profile mentee
 router.get("/profilementee", (req, res) => {
-=======
-//profile render
-router.get("/profilementee", (req, res) => {
-  console.log("inside profile");
->>>>>>> Stashed changes
   RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
       //console.log("found");
-<<<<<<< Updated upstream
       console.log("user profile name and id is");
       console.log(data.name);
       console.log(data._id);
@@ -298,11 +264,6 @@ router.get("/profilementor", (req, res) => {
       res.render("profilementor", { profileobject: data });
     }
   });
-=======
-      res.render("profilementee", { profileobject: data });
-    }
-  });
->>>>>>> Stashed changes
 });
 
 //  Create a session
@@ -313,7 +274,6 @@ router.post("/createsession", async (req, res) => {
       if (!data) {
         res.render("sign-in", { created: "" });
       } else {
-<<<<<<< Updated upstream
         try {
           const sessionuser = await new SessionSchema({
             name: req.body.name,
@@ -328,15 +288,6 @@ router.post("/createsession", async (req, res) => {
           console.log("error creating session by mentor" + e);
           res.status(400).redirect("/");
         }
-=======
-        const sessionuser = await new SessionSchema({
-          name: req.body.name,
-          date: req.body.date,
-          description: req.body.description,
-        });
-        sessionuser.save();
-        res.status(201).redirect("/createsession");
->>>>>>> Stashed changes
       }
     }
   );
@@ -347,44 +298,14 @@ router.get("/createsession", function (req, res) {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
-<<<<<<< Updated upstream
       SessionSchema.find({ email: data.email }, function (err, data) {
-=======
-      SessionSchema.find({}, function (err, data) {
->>>>>>> Stashed changes
         if (!data) res.render("createsession", { session: [] });
         else res.render("createsession", { session: data });
       });
     }
   });
-<<<<<<< Updated upstream
-=======
 });
 
-// Book a session
-router.post("/order", (req, res) => {
-  let options = {
-    amount: 22000,
-    currency: "INR",
-  };
-  razorpay.orders.create(options, function (err, order) {
-    console.log(order);
-    res.json(order);
-  });
-});
-
-router.post("/isordercomplete", (req, res) => {
-  razorpay.payments
-    .fetch(req.body.razorpay_payment_id)
-    .then((paymentDocument) => {
-      if (paymentDocument.status == "captured") {
-        res.send("Payment successfull");
-      } else {
-        res.redirect("/profilementee");
-      }
-    });
->>>>>>> Stashed changes
-});
 
 //mentormatching
 router.get("/matchmentor", (req, res) => {
@@ -400,42 +321,58 @@ router.get("/matchmentor", (req, res) => {
         queryarr.push({ interest: interestarray[index] });
       }
       let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
-<<<<<<< Updated upstream
       //console.log(query);
       RegisterSchema.find(query, function (err, valuefound) {
         if (!valuefound) res.render("matchmentor", { blogs: [] });
-=======
-      RegisterSchema.find(query, function (err, valuefound) {
-        if (!valuefound) "matchmentor", { blogs: [] };
->>>>>>> Stashed changes
         res.render("matchmentor", { blogs: valuefound });
       });
     }
   });
-<<<<<<< Updated upstream
 });
-// Book a mentor
+
+
+// Book a mentor : auth not added
 router.post("/order", (req, res) => {
-  let options = {
-    amount: 22000,
+  RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
+    if (!data) {
+      res.render("sign-in", { created: "" });
+    }
+    else{  
+    let options = {
+    amount: 20000,
     currency: "INR",
   };
   razorpay.orders.create(options, function (err, order) {
     console.log(order);
     res.json(order);
   });
+}
+});
 });
 
-router.post("/isordercomplete", (req, res) => {
-  razorpay.payments
+router.post("/isordercomplete", async (req, res) => {
+  RegisterSchema.findOne({ _id: req.session.userId }, async function (err, data) {
+    if (!data) {
+      res.render("sign-in", { created: "" });
+    }
+  else {  razorpay.payments
     .fetch(req.body.razorpay_payment_id)
-    .then((paymentDocument) => {
+    .then(async (paymentDocument) => {
       if (paymentDocument.status == "captured") {
-        res.redirect("profilementee");
+    const ment= await RegisterSchema.findById(enrolledmentor);
+      // ment.enrolled.push(data._id)
+      // console.log(data._id);
+      // enrolledmentor="";
+      // console.log(ment.name);
+      data.enrolled.push(ment.name);
+      console.log(data.enrolled);
+      res.render("profilementee", { profileobject: data});
       } else {
-        res.status(400);
+        res.status(400).send("Booking unsucceful Please try again later");
       }
     });
+  }
+});
 });
 
 //filter for metee page
@@ -474,11 +411,8 @@ router.post("/filter", (req, res) => {
       }
     }
   });
-=======
->>>>>>> Stashed changes
 });
 
-// Payment method
 
 // logout
 router.get("/logout", (req, res) => {

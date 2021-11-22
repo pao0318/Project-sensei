@@ -40,6 +40,9 @@ const userSchema = new mongoose.Schema({
   sessions: {
     type: [String],
   },
+  enrolled:{
+type: [String],
+  }
 });
 
 module.exports = mongoose.model("Register", userSchema);
