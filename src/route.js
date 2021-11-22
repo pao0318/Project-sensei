@@ -3,6 +3,7 @@ var router = express.Router();
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
+var ObjectID = require('mongodb').ObjectId;
 
 require("dotenv/config");
 const RegisterSchema = require("./models/registers");
@@ -37,13 +38,20 @@ router.get("/", (req, res) => {
 });
 });
 
-
-router.get("/viewprofile", (req, res) => {
-  res.render("viewprofile");
-});
-router.post('/viewprofile', (req,res)=>{
+//view profile pafe of a mentor from mentee 
+// router.get("/viewprofile", (req, res) => {
+//   res.render("viewprofile");
+// });
+router.post('/viewprofile',(req,res)=>{
   console.log("Deleted button has been clicked: "+ req.body.buttonId)
-  })
+  y = ObjectID(req.body.buttonId);
+  RegisterSchema.find({_id:y},(err,data)=>{
+    console.log("here");
+    console.log(y);
+    res.render("viewprofile",{profileobject:data});
+  });
+  });
+  
 
 router.get("/signupmentee", (req, res) => {
   res.render("signupmentee");

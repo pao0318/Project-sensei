@@ -183,7 +183,18 @@
                     <span class="badge-md badge-pill text-dark" style="background-color:#fda9c5;color: black; padding: 5px;border-radius: 10px;display: inline-block;margin-top: 10px;margin-right: 5px;"><%= blogs[i].interest[j] %></span>
                  <% } %>
                   </p>
-                  <button class="btn btn-primary mx-auto d-block mt-lg-2" onclick="deleting('<%= blogs[i]._id %>')">View Profile</button>              
+                  <button class="viewprof btn btn-primary mx-auto d-block mt-lg-2" id='<%= blogs[i]._id %>' onClick="myFunction(this.id)">View Profile</button>  
+                  <script>
+
+function myFunction(value) {
+    //console.log(typeof value);
+    fetch('/viewprofile', { 
+      method: 'POST', 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({buttonId: value} )
+    })
+};
+              </script>            
                 </div>
               </div></div>
         <% } %>
@@ -206,29 +217,27 @@
       </footer>
     </div>
   </main>
-  <!--   Core JS Files   -->
-  <script src="js/core/popper.min.js"></script>
-  <script src="js/core/bootstrap.min.js"></script>
-  <script src="js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="js/plugins/smooth-scrollbar.min.js"></script>
-  <script src="js/plugins/chartjs.min.js"></script>    
-  <script>
+  
+  <!-- <script>
     function deleting(value){
-      console.log(value)
-fetch('/viewfiles', { method: 'POST', data: {buttonId: value} })
-  .then(function (response) {
-    if (response.ok) {
-      console.log('Delete was recorded')
-      return
-    }
-    throw new Error('Request failed.')
-  })
-  .catch(function (error) {
-    console.log(error)
-  })
+   const k=   document.getElementByClassName("viewprof").addEventListener('click', function() {
+ console.log("allah");
+});
+      console.log('reached here')
+// fetch('/viewfiles', { method: 'POST', data: {buttonId: value} })
+//   .then(function (response) {
+//     if (response.ok) {
+//       console.log('Delete was recorded')
+//       return
+//     }
+//     throw new Error('Request failed.')
+//   })
+//   .catch(function (error) {
+//     console.log(error)
+//   })
 }
-  </script>
-  <script>
+  </script> -->
+  <!-- <script>
     var ctx = document.getElementById("chart-bars").getContext("2d");
 
     new Chart(ctx, {
@@ -474,8 +483,8 @@ fetch('/viewfiles', { method: 'POST', data: {buttonId: value} })
         },
       },
     });
-  </script>
-  <script>
+  </script> -->
+  <!-- <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
@@ -483,7 +492,14 @@ fetch('/viewfiles', { method: 'POST', data: {buttonId: value} })
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-  </script>
+  </script> -->
+
+    <!--   Core JS Files   -->
+    <script src="js/core/popper.min.js"></script>
+    <script src="js/core/bootstrap.min.js"></script>
+    <script src="js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="js/plugins/chartjs.min.js"></script>  
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
