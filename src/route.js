@@ -120,6 +120,9 @@ router.get("/signupmentor", (req, res) => {
 router.get("/signupbtn", (req, res) => {
   res.render("signupbtn");
 });
+router.get("/chat", (req, res) => {
+  res.render("chat");
+});
 
 //create new user in db for mentee
 router.post("/registermentee", async (req, res) => {
