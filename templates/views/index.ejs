@@ -103,9 +103,9 @@
               <div class="card card-blog card-plain">
                 <div class="card-header p-0 mt-n4 mx-3">
                   <a class="d-block shadow-xl border-radius-xl">
-                    <% if ( weekly_session[i].name.toLowerCase() == "development" || weekly_session[i].name.toLowerCase() == "coding") { %>
+                    <% if ( weekly_session[i].description.toLowerCase() === "development" || weekly_session[i].description.toLowerCase() === "coding") { %>
                     <img src="img/img-1.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
-                  <% } else if ( weekly_session[i].name.toLowerCase() == "design") { %>
+                  <% } else if ( weekly_session[i].description.toLowerCase() === "design") { %>
                     <img src="img/img-2.png" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
                   <% } else { %>
                     <img src="img/img-3.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">

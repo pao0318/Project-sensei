@@ -3,6 +3,13 @@ var router = express.Router();
 const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
+const Razorpay = require("razorpay");
+var env = require("dotenv/config");
+
+const razorpay = new Razorpay({
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRET,
+});
 
 require("dotenv/config");
 const RegisterSchema = require("./models/registers");
@@ -272,7 +279,7 @@ router.post("/createsession", async (req, res) => {
           console.log(sessionuser.name);
           res.status(201).redirect("/createsession");
         } catch (e) {
-          console.log("erroe creating session by mentor" + e);
+          console.log("error creating session by mentor" + e);
           res.status(400).redirect("/");
         }
       }
@@ -314,6 +321,29 @@ router.get("/matchmentor", (req, res) => {
       });
     }
   });
+});
+// Book a mentor
+router.post("/order", (req, res) => {
+  let options = {
+    amount: 22000,
+    currency: "INR",
+  };
+  razorpay.orders.create(options, function (err, order) {
+    console.log(order);
+    res.json(order);
+  });
+});
+
+router.post("/isordercomplete", (req, res) => {
+  razorpay.payments
+    .fetch(req.body.razorpay_payment_id)
+    .then((paymentDocument) => {
+      if (paymentDocument.status == "captured") {
+        res.redirect("profilementee");
+      } else {
+        res.status(400);
+      }
+    });
 });
 
 //filter for metee page

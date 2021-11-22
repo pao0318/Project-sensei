@@ -20,6 +20,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="/css/material-dashboard.css?v=3.0.0" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
  </head>
 
 <body class="g-sidenav-show bg-gray-200">
@@ -146,7 +148,7 @@
                       </a>
                     </li>
                     <br/>
-                    <li class="list-group-item border-0 ps-0 pt-0 text-md"> <button type="button" class="btn btn-outline-primary btn-md mb-0 bg-primary" style="color: white;">Book Now</button>
+                    <li class="list-group-item border-0 ps-0 pt-0 text-md"> <button type="button" id ="rzp-button" class="btn btn-outline-primary btn-md mb-0 bg-primary" style="color: white;">Book Now</button>
                     </li>
                     
                   </ul>
@@ -202,6 +204,32 @@
 const intials = fullName.split(' ').map(name => name[0]).join('').toUpperCase();
 document.getElementById('profileImagementee').innerHTML = intials;
  </script>
+
+
+    <!-- Adding payment for booking session or mentor -->
+    <script>
+      axios.post('/order').then((info)=>{
+        console.log(info)
+        var options = {
+          "key": "rzp_test_DVBH252dUcCnLO", // Enter the Key ID generated from the Dashboard
+          "name": "Acme Corp",
+          "image": "https://logodix.com/logo/1931223.png",
+          "order_id": info.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+          "callback_url": "/isordercomplete",
+          "theme": {
+              "color": "#3399cc"
+          }
+        };
+  
+        var rzp=new Razorpay(options);
+        document.getElementById('rzp-button').onclick=function(e){
+          rzp.open()
+          e.preventDefault();
+        }
+  
+      })
+    </script>
+
 </body>
 
 </html>
