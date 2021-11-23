@@ -95,35 +95,39 @@
       <!-- code for mentor matcing -->
     </div><br/>
  
-    <div class="container">
+    <div class="col-12 mt-3" style="padding: 20px;">
       <div class="row">
         <% for (let i =0;i<blogs.length;i++) { %>
-              <div class="col-3 col-md-3 d-flex  align-items-stretch">
-                <div class="card" style="width: 23rem; margin-bottom: 20px;">
-                <img src='data:image/png;base64,<%= blogs[i].img.data.toString('base64') %>' class="card-img-top" alt="..." style="
-                  width: 285px;
-                  height: 300px;
-                  object-position: center;
-                  object-fit: cover;
-                  "/>
-                <div class="card-body" style="padding: 15px;">
-                  <h5 class="card-title"><%= blogs[i].name %></h5>
-                  <p class="card-text mb-0"><b>Work Profile : </b><%= blogs[i].work %> at <%= blogs[i].company %></p>
-                  <p class="card-text mb-0"><b>Experience : </b><%= blogs[i].experience %> year</p>
-                  <p>
-                  <b>Interets: </b>
-                   <% for(let j=0;j< blogs[i].interest.length;j++){ %>
-                    <span class="badge-md badge-pill text-dark" style="background-color:#fda9c5;color: black; padding: 5px;border-radius: 10px;display: inline-block;margin-top: 10px;margin-right: 5px;"><%= blogs[i].interest[j] %></span>
-                 <% } %>
-                  </p>
-                  <a>
-                  <button class="btn btn-primary mx-auto d-block mt-lg-2"  href="#">View Profile</button>
+          <div class="col-xl-3 col-md-6 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
+            <div class="card card-blog card-plain" style="background-color: rgb(255, 255, 255);">
+              <div class="card-header p-0 mt-n4 mx-3">
+                <a class="d-block shadow-xl border-radius-xl">
+                  <img src='data:image/png;base64,<%= blogs[i].img.data.toString('base64') %>' alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                </a>
+              </div>
+              <div class="card-body p-3" >
+                <h5 class="card-title"><%= blogs[i].name %></h5>
+                <p class="card-text mb-0  text-sm"><b>Work Profile : </b><%= blogs[i].work %> at <%= blogs[i].company %></p>
+                <p class="card-text mb-0  text-sm"><b>Experience : </b><%= blogs[i].experience %> year</p>
+                <p class="card-text mb-0  text-sm">
+                <b>Interets: </b>
+                 <% for(let j=0;j< blogs[i].interest.length;j++){ %>
+                  <span class="badge-sm badge-pill text-dark mt-1" style="background-color:#fda9c5;color: black; padding: 5px;border-radius: 10px;display: inline-block;margin-right: 5px;"><%= blogs[i].interest[j] %></span>
+               <% } %>
+                </p>
+                <div class=" mt-3 d-flex align-items-center justify-content-center">
+                  <a href="/viewprofile/<%= blogs[i]._id %>">
+                  <button type="button" class="btn btn-outline-primary btn-sm mb-0 bg-primary " style="color: white;">View Profile</button>
                 </a>
                 </div>
-              </div></div>
-        <% } %>
+              </div>
+            </div>
+          </div>
+    <% } %>
       </div>
-    </div>
+  </div>
+
+
 
     <!-- End of the script -->
       <footer class="footer py-4  ">

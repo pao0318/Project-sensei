@@ -5,8 +5,7 @@ const fs = require("fs");
 const multer = require("multer");
 const Razorpay = require("razorpay");
 var env = require("dotenv/config");
-var enrolledmentor="";
-var enrolledmentee="";
+let enrolledmentor="";
 const razorpay = new Razorpay({
   key_id: process.env.KEY_ID,
   key_secret: process.env.KEY_SECRET,
@@ -360,11 +359,14 @@ router.post("/isordercomplete", async (req, res) => {
     .then(async (paymentDocument) => {
       if (paymentDocument.status == "captured") {
     const ment= await RegisterSchema.findById(enrolledmentor);
-      // ment.enrolled.push(data._id)
       // console.log(data._id);
       // enrolledmentor="";
       // console.log(ment.name);
       data.enrolled.push(ment.name);
+      data.save();
+      ment.enrolled.push(data.name);
+      ment.save();
+      enrolledmentor="";
       console.log(data.enrolled);
       res.render("profilementee", { profileobject: data});
       } else {

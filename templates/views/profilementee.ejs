@@ -164,9 +164,10 @@
                 <p class="text-sm">Progress Track</p>
               </div>
               <div class="row">
+                
              <%   for (let j =0;j<profileobject.enrolled.length;j++) { %>
-                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-                  <div class="card card-blog card-plain">
+              <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                  <div class="card card-blog card-plain" style="background-color: rgb(241, 241, 241);">
                     <div class="card-header p-0 mt-n4 mx-3">
                       <a class="d-block shadow-xl border-radius-xl">
                       <img src="img/img-1.jpg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
@@ -178,14 +179,20 @@
                          <%= profileobject.enrolled[j]%>
                         </h5>
                       </a>
-                     
-                      <div class="d-flex align-items-center justify-content-between">
+                      <p  style="color: rgb(0, 184, 55);font-weight: normal">
+                      Enrolled
+                      </p>
+                      <div class="d-flex align-items-center justify-content-between mt-1">
                         <button type="button" class="btn btn-outline-primary btn-sm mb-0">Send Message</button>
                       </div>
                     </div>
+                    </div>
                   </div>
                 <% } %>
-                </div>
+              
+              </div>
+              </div>
+              
     <footer class="footer py-4  ">
       <div class="container-fluid">
         <div class="row align-items-center justify-content-lg-between">
