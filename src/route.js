@@ -77,7 +77,7 @@ router.get("/viewprofile/:id", async (req, res) => {
           const user = await RegisterSchema.findById(id);
           enrolledmentor=id;
           if (user) {
-            res.render("viewprofile", { profileobject: user });
+            res.render("viewprofile", { profileobject: user,  });
           } else {
             res.status(400).send({ error: "No id provided" });
           }
@@ -103,6 +103,41 @@ router.get("/viewprofilementor/:id", async (req, res) => {
           const user = await RegisterSchema.findById(id);
           if (user) {
             res.render("viewprofilementor", { profileobject: user });
+          } else {
+            res.status(400).send({ error: "No id provided" });
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  );
+});
+
+//add review
+
+router.post("/addreview/:id", async (req, res) => {
+  RegisterSchema.findOne(
+    { _id: req.session.userId },
+    async function (err, data) {
+      if (!data) {
+        res.render("sign-in", { created: "" });
+      } else {
+        const id = req.params.id;
+        try {
+          const ment = await RegisterSchema.findById(id);
+          const review=req.body.review;
+          if (ment) {
+            const reviewobject={
+              from:data.name,
+              fromId:data._id.toString(),
+              toId:id,
+              review:review
+            };
+            ment.reviews.push(reviewobject);
+            ment.save();
+            res.redirect("/");
+
           } else {
             res.status(400).send({ error: "No id provided" });
           }

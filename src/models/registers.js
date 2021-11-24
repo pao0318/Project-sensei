@@ -56,6 +56,16 @@ const userSchema = new mongoose.Schema({
       message:String
    }
   },
+  reviews: {
+    type: [
+      {
+      from:String,
+      fromId:String,
+      toId:String,
+      review:String
+   }
+  ]
+  },
 });
 
 module.exports = mongoose.model("Register", userSchema);
