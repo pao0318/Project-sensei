@@ -40,9 +40,22 @@ const userSchema = new mongoose.Schema({
   sessions: {
     type: [String],
   },
-  enrolled:{
-type: [String],
-  }
+  enrolled: {
+    type: [
+      {
+        name:String,
+        id:String
+     }
+     ],
+  },
+  chatnotification: {
+    type: {
+      from:String,
+      fromId:String,
+      toId:String,
+      message:String
+   }
+  },
 });
 
 module.exports = mongoose.model("Register", userSchema);

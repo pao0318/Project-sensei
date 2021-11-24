@@ -5,6 +5,7 @@ const fs = require("fs");
 const multer = require("multer");
 const Razorpay = require("razorpay");
 var env = require("dotenv/config");
+var ObjectId = require('mongodb').ObjectId;
 let enrolledmentor="";
 const razorpay = new Razorpay({
   key_id: process.env.KEY_ID,
@@ -140,10 +141,67 @@ router.get("/chatnotificationsmentee", (req, res) => {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
-    res.render("notificationsmentee");
+      
+        if (data.chatnotification == undefined){
+          res.render("notificationsmentee",{chatmessage:""});
+      }
+        else  res.render("notificationsmentee",{chatmessage:data.chatnotification});
   }
 });
 });
+
+//chat notifications for mentor
+router.get("/chatnotificationsmentor", (req, res) => {
+  RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
+    if (!data) {
+      res.render("sign-in", { created: "" });
+    } else {
+      if (data.chatnotification == undefined){
+        res.render("notificationsmentor",{chatmessage:""});
+    }
+      else  res.render("notificationsmentor",{chatmessage:data.chatnotification});
+  }
+});
+});
+//for sending message to mentor or mentee
+router.post("/sendmessage/:id", async (req, res) => {
+  RegisterSchema.findOne(
+    { _id: req.session.userId },
+    async function (err, data) {
+      if (!data) {
+        res.render("sign-in", { created: "" });
+      } else {
+        const id = req.params.id;
+        try {
+          const ment = await RegisterSchema.findById(id);
+          const message=req.body.message;
+          if (ment) {
+            ment.chatnotification={
+              from:data.name,
+              fromId:data._id.toString(),
+              toId:id,
+              message:message
+            };
+            ment.save();
+            if(data.chatnotification!=undefined){
+              data.chatnotification=undefined;
+              data.save();
+            }
+            res.redirect("/");
+
+          } else {
+            res.status(400).send({ error: "No id provided" });
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  );
+});
+
+
+
 
 //create new user in db for mentee
 router.post("/registermentee", async (req, res) => {
@@ -171,6 +229,7 @@ router.post("/registermentee", async (req, res) => {
   }
 });
 
+
 //create new user in db for mentor
 router.post("/registermentor", upload.single("image"), async (req, res) => {
   try {
@@ -190,6 +249,7 @@ router.post("/registermentor", upload.single("image"), async (req, res) => {
         ),
         contentType: "image/png",
       },
+      
     });
     registeruser.save(function (err, Person) {
       if (err) {
@@ -380,9 +440,9 @@ router.post("/isordercomplete", async (req, res) => {
       // console.log(data._id);
       // enrolledmentor="";
       // console.log(ment.name);
-      data.enrolled.push(ment.name);
+      data.enrolled.push({name:ment.name,id:enrolledmentor});
       data.save();
-      ment.enrolled.push(data.name);
+      ment.enrolled.push({name:data.name,id:data._id.toString()});
       ment.save();
       enrolledmentor="";
       console.log(data.enrolled);
