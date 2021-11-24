@@ -101,7 +101,7 @@
         <div class="row">
           <% for (let i =0;i<weekly_session.length;i++) { %>
             <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
-              <div class="card card-blog card-plain">
+              <div class="card card-blog card-plain" style="background-color: rgb(32, 32, 32);">
                 <div class="card-header p-0 mt-n4 mx-3">
                   <a class="d-block shadow-xl border-radius-xl">
                     <% if ( weekly_session[i].description.toLowerCase() === "development" || weekly_session[i].description.toLowerCase() === "coding") { %>
@@ -113,15 +113,15 @@
                   <% } %>
                   </a>
                 </div>
-                <div class="card-body p-3">
-                  <p class="mb-0 text-sm"><%= weekly_session[i].name %></p>
+                <div class="card-body p-3"  style="color: rgb(209, 209, 209);">
                   <a href="javascript:;">
-                    <h5>
-                      <%= weekly_session[i].name %>
-                    </h5>
-                  </a>
-                  <p class="mb-4 text-sm">
-                    <%= weekly_session[i].description %>
+                    <h7 style="color: #e05583">
+                      <strong>Session name: </strong><%= weekly_session[i].name %>
+                    </h7>
+                     </a>
+                    <p class="mb-1"><strong>By: </strong><%= weekly_session[i].author %></p>
+                    <p class="mb-4 text-sm">
+                   <strong>Topic: </strong><%= weekly_session[i].description %>
                   </p>
                   <div class="d-flex align-items-center justify-content-between">
                     <button type="button" class="btn btn-outline-primary btn-sm mb-0 bg-primary" style="color: white;">Enroll Session</button>

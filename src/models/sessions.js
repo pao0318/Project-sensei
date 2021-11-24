@@ -16,6 +16,10 @@ const sessionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  author:{
+    type:String,
+    required:true,
+  }
 });
 
 module.exports = mongoose.model("Createsession", sessionSchema);

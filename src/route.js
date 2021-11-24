@@ -342,7 +342,7 @@ router.post("/login", async (req, res, next) => {
       if (useremail.role === "mentor") {
         RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
           SessionSchema.find(
-            { role: "mentor" },
+            {},
             function (err, weekly_sessionfound) {
               res.render("indexmentor", {
                 blogs: valuefound,
@@ -356,7 +356,7 @@ router.post("/login", async (req, res, next) => {
       else {
         RegisterSchema.find({ role: "mentor" }, function (err, valuefound) {
           SessionSchema.find(
-            { role: "mentor" },
+            {},
             function (err, weekly_sessionfound) {
               res.render("index", {
                 blogs: valuefound,
@@ -409,6 +409,7 @@ router.post("/createsession", async (req, res) => {
               date: req.body.date,
               description: req.body.description,
               email: data.email,
+              author:data.name,
             });
             sessionuser.save();
             console.log(sessionuser.name);
