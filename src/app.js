@@ -6,6 +6,7 @@ var env = require("dotenv/config");
 var mongoose = require("mongoose");
 var session = require("express-session");
 var MongoStore = require("connect-mongo");
+const http = require('http').createServer(app)
 
 const port = process.env.PORT || 3000;
 
@@ -62,6 +63,17 @@ app.use(function (req, res, next) {
   // next(err);
 });
 
-app.listen(port, () => {
+http.listen(port, () => {
   console.log(`Listening at port http://localhost:${port}/`);
 });
+
+// Socket 
+const io = require('socket.io')(http)
+
+io.on('connection', (socket) => {
+    console.log('Connected...')
+    socket.on('message', (msg) => {
+        socket.broadcast.emit('message', msg)
+    })
+
+})
