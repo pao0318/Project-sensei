@@ -66,6 +66,9 @@ const userSchema = new mongoose.Schema({
    }
   ]
   },
+  progresswidth: {
+    type:Number
+  }
 });
 
 module.exports = mongoose.model("Register", userSchema);

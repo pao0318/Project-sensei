@@ -235,6 +235,33 @@ router.post("/sendmessage/:id", async (req, res) => {
   );
 });
 
+//add progress by mentor 
+router.post("/addprogress/:id", async (req, res) => {
+  RegisterSchema.findOne(
+    { _id: req.session.userId },
+    async function (err, data) {
+      if (!data) {
+        res.render("sign-in", { created: "" });
+      } else {
+        const id = req.params.id;
+        try {
+          const ment = await RegisterSchema.findById(id);
+          const progress=req.body.progress;
+          if (ment) {
+            ment.progresswidth=progress;
+            ment.save();
+            res.redirect("/");
+
+          } else {
+            res.status(400).send({ error: "No id provided" });
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  );
+});
 
 
 

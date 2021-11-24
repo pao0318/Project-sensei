@@ -180,9 +180,10 @@
                          <%= profileobject.enrolled[j].name%>
                         </h5>
                       </a>
-                      <p  style="color: rgb(0, 184, 55);font-weight: normal">
-                      Enrolled
+                    <p  style="color: #e3306f;font-weight: normal">
+                      Completed
                       </p>
+                      
                       <!-- input testing chat -->
                       <form role="form" class="text-start" action="/sendmessage/<%=  profileobject.enrolled[j].id %>" method="POST">
                         <div class="input-group input-group-outline my-3">
@@ -192,7 +193,11 @@
                           <button type="submit" class="btn btn-outline-primary btn-sm mb-0">Submit</button>
                         </div>
                       </form>
-                      
+                      <h6 class="text-md mt-3">Progress</h6>
+                      <div class="progress" style="background-color: #ffffff">
+                        <div class="progress-bar bg-success" role="progressbar" style="width:<%= profileobject.progresswidth %>% ;"  aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                     
                     </div>
                     </div>
                   </div>
