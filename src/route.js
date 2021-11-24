@@ -123,12 +123,24 @@ router.get("/signupbtn", (req, res) => {
   res.render("signupbtn");
 });
 
-router.get("/chat", (req, res) => {
+// discussion forum
+router.get("/discussion", (req, res) => {
   RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
-    res.render("chat");
+    res.render("discussion");
+  }
+});
+});
+
+//chat notifications for mentee
+router.get("/chatnotificationsmentee", (req, res) => {
+  RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
+    if (!data) {
+      res.render("sign-in", { created: "" });
+    } else {
+    res.render("notificationsmentee");
   }
 });
 });
@@ -348,7 +360,7 @@ router.post("/order", (req, res) => {
     currency: "INR",
   };
   razorpay.orders.create(options, function (err, order) {
-    console.log(order);
+    //console.log(order);
     res.json(order);
   });
 }
