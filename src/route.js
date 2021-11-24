@@ -122,8 +122,15 @@ router.get("/signupmentor", (req, res) => {
 router.get("/signupbtn", (req, res) => {
   res.render("signupbtn");
 });
+
 router.get("/chat", (req, res) => {
-  res.render("chat");
+  RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
+    if (!data) {
+      res.render("sign-in", { created: "" });
+    } else {
+    res.render("chat");
+  }
+});
 });
 
 //create new user in db for mentee
@@ -241,7 +248,6 @@ router.get("/profilementee", (req, res) => {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
-      //console.log("found");
       console.log("user profile name and id is");
       console.log(data.name);
       console.log(data._id);
