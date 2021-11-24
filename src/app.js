@@ -58,7 +58,7 @@ app.use("/", index);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = res.send("Ooops!! Requested Pasge Not Found");
+  var err = res.send("<h1>Ooops!! Requested Page Not Found</h1>");
   err.status = 404;
   // next(err);
 });

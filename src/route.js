@@ -5,8 +5,8 @@ const fs = require("fs");
 const multer = require("multer");
 const Razorpay = require("razorpay");
 var env = require("dotenv/config");
-var ObjectId = require('mongodb').ObjectId;
-let enrolledmentor="";
+var ObjectId = require("mongodb").ObjectId;
+let enrolledmentor = "";
 const razorpay = new Razorpay({
   key_id: process.env.KEY_ID,
   key_secret: process.env.KEY_SECRET,
@@ -75,9 +75,9 @@ router.get("/viewprofile/:id", async (req, res) => {
         const id = req.params.id;
         try {
           const user = await RegisterSchema.findById(id);
-          enrolledmentor=id;
+          enrolledmentor = id;
           if (user) {
-            res.render("viewprofile", { profileobject: user,  });
+            res.render("viewprofile", { profileobject: user });
           } else {
             res.status(400).send({ error: "No id provided" });
           }
@@ -89,15 +89,14 @@ router.get("/viewprofile/:id", async (req, res) => {
   );
 });
 
-//view profile pafe of a mentor from mentor
+//view profile page of a mentor from mentor
 router.get("/viewprofilementor/:id", async (req, res) => {
   RegisterSchema.findOne(
     { _id: req.session.userId },
     async function (err, data) {
       if (!data) {
         res.render("sign-in", { created: "" });
-      }
-       else {
+      } else {
         const id = req.params.id;
         try {
           const user = await RegisterSchema.findById(id);
@@ -126,18 +125,17 @@ router.post("/addreview/:id", async (req, res) => {
         const id = req.params.id;
         try {
           const ment = await RegisterSchema.findById(id);
-          const review=req.body.review;
+          const review = req.body.review;
           if (ment) {
-            const reviewobject={
-              from:data.name,
-              fromId:data._id.toString(),
-              toId:id,
-              review:review
+            const reviewobject = {
+              from: data.name,
+              fromId: data._id.toString(),
+              toId: id,
+              review: review,
             };
             ment.reviews.push(reviewobject);
             ment.save();
             res.redirect("/");
-
           } else {
             res.status(400).send({ error: "No id provided" });
           }
@@ -159,45 +157,53 @@ router.get("/signupbtn", (req, res) => {
   res.render("signupbtn");
 });
 
-// discussion forum
+
+// discussion forum for mentee
 router.get("/discussion", (req, res) => {
   RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
-    res.render("discussion");
-  }
-});
-});
-
-//chat notifications for mentee
-router.get("/chatnotificationsmentee", (req, res) => {
-  RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
-    if (!data) {
-      res.render("sign-in", { created: "" });
-    } else {
-      
-        if (data.chatnotification == undefined){
-          res.render("notificationsmentee",{chatmessage:""});
+      if (data.role === "mentor") {
+        res.send(
+          "<h2>Sorry requested page not found! Check url once again</h2>"
+        );
+      } else{
+        res.render("discussion");
       }
-        else  res.render("notificationsmentee",{chatmessage:data.chatnotification});
-  }
-});
+        
+    }
+  });
 });
 
-//chat notifications for mentor
-router.get("/chatnotificationsmentor", (req, res) => {
+//chat notifications for mentor and mentee
+router.get("/chatnotifications", (req, res) => {
   RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
-      if (data.chatnotification == undefined){
-        res.render("notificationsmentor",{chatmessage:""});
+      //mentor
+      if (data.role === "mentor") {
+        if (data.chatnotification == undefined) {
+          res.render("notificationsmentor", { chatmessage: "" });
+        } else
+          res.render("notificationsmentor", {
+            chatmessage: data.chatnotification,
+          });
+      } 
+      //mentee
+      else {
+        if (data.chatnotification == undefined) {
+          res.render("notificationsmentee", { chatmessage: "" });
+        } else
+          res.render("notificationsmentee", {
+            chatmessage: data.chatnotification,
+          });
+      }
     }
-      else  res.render("notificationsmentor",{chatmessage:data.chatnotification});
-  }
+  });
 });
-});
+
 //for sending message to mentor or mentee
 router.post("/sendmessage/:id", async (req, res) => {
   RegisterSchema.findOne(
@@ -209,21 +215,20 @@ router.post("/sendmessage/:id", async (req, res) => {
         const id = req.params.id;
         try {
           const ment = await RegisterSchema.findById(id);
-          const message=req.body.message;
+          const message = req.body.message;
           if (ment) {
-            ment.chatnotification={
-              from:data.name,
-              fromId:data._id.toString(),
-              toId:id,
-              message:message
+            ment.chatnotification = {
+              from: data.name,
+              fromId: data._id.toString(),
+              toId: id,
+              message: message,
             };
             ment.save();
-            if(data.chatnotification!=undefined){
-              data.chatnotification=undefined;
+            if (data.chatnotification != undefined) {
+              data.chatnotification = undefined;
               data.save();
             }
             res.redirect("/");
-
           } else {
             res.status(400).send({ error: "No id provided" });
           }
@@ -235,7 +240,7 @@ router.post("/sendmessage/:id", async (req, res) => {
   );
 });
 
-//add progress by mentor 
+//add progress by mentor
 router.post("/addprogress/:id", async (req, res) => {
   RegisterSchema.findOne(
     { _id: req.session.userId },
@@ -246,12 +251,11 @@ router.post("/addprogress/:id", async (req, res) => {
         const id = req.params.id;
         try {
           const ment = await RegisterSchema.findById(id);
-          const progress=req.body.progress;
+          const progress = req.body.progress;
           if (ment) {
-            ment.progresswidth=progress;
+            ment.progresswidth = progress;
             ment.save();
             res.redirect("/");
-
           } else {
             res.status(400).send({ error: "No id provided" });
           }
@@ -262,8 +266,6 @@ router.post("/addprogress/:id", async (req, res) => {
     }
   );
 });
-
-
 
 //create new user in db for mentee
 router.post("/registermentee", async (req, res) => {
@@ -291,7 +293,6 @@ router.post("/registermentee", async (req, res) => {
   }
 });
 
-
 //create new user in db for mentor
 router.post("/registermentor", upload.single("image"), async (req, res) => {
   try {
@@ -311,7 +312,6 @@ router.post("/registermentor", upload.single("image"), async (req, res) => {
         ),
         contentType: "image/png",
       },
-      
     });
     registeruser.save(function (err, Person) {
       if (err) {
@@ -376,8 +376,8 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-//profile mentee
-router.get("/profilementee", (req, res) => {
+//profile mentee and mentor
+router.get("/profile", (req, res) => {
   RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
     if (!data) {
       res.render("sign-in", { created: "" });
@@ -385,25 +385,14 @@ router.get("/profilementee", (req, res) => {
       console.log("user profile name and id is");
       console.log(data.name);
       console.log(data._id);
-      res.render("profilementee", { profileobject: data });
+      if(data.role==="mentor"){
+        res.render("profilementor", { profileobject: data });
+      }
+      else res.render("profilementee", { profileobject: data });
     }
   });
 });
 
-//profile mentor
-router.get("/profilementor", (req, res) => {
-  RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
-    if (!data) {
-      res.render("sign-in", { created: "" });
-    } else {
-      //console.log("found");
-      console.log("user profile name and id is");
-      console.log(data.name);
-      console.log(data._id);
-      res.render("profilementor", { profileobject: data });
-    }
-  });
-});
 
 //  Create a session
 router.post("/createsession", async (req, res) => {
@@ -413,19 +402,25 @@ router.post("/createsession", async (req, res) => {
       if (!data) {
         res.render("sign-in", { created: "" });
       } else {
-        try {
-          const sessionuser = await new SessionSchema({
-            name: req.body.name,
-            date: req.body.date,
-            description: req.body.description,
-            email: data.email,
-          });
-          sessionuser.save();
-          console.log(sessionuser.name);
-          res.status(201).redirect("/createsession");
-        } catch (e) {
-          console.log("error creating session by mentor" + e);
-          res.status(400).redirect("/");
+        if (data.role === "mentor") {
+          try {
+            const sessionuser = await new SessionSchema({
+              name: req.body.name,
+              date: req.body.date,
+              description: req.body.description,
+              email: data.email,
+            });
+            sessionuser.save();
+            console.log(sessionuser.name);
+            res.status(201).redirect("/createsession");
+          } catch (e) {
+            console.log("error creating session by mentor" + e);
+            res.status(400).redirect("/");
+          }
+        } else {
+          res.send(
+            "<h2>Sorry requested page not found! Check url once again</h2>"
+          );
         }
       }
     }
@@ -437,14 +432,19 @@ router.get("/createsession", function (req, res) {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
-      SessionSchema.find({ email: data.email }, function (err, data) {
-        if (!data) res.render("createsession", { session: [] });
-        else res.render("createsession", { session: data });
-      });
+      if (data.role === "mentor") {
+        SessionSchema.find({ email: data.email }, function (err, data) {
+          if (!data) res.render("createsession", { session: [] });
+          else res.render("createsession", { session: data });
+        });
+      } else {
+        res.send(
+          "<h2>Sorry requested page not found! Check url once again</h2>"
+        );
+      }
     }
   });
 });
-
 
 //mentormatching
 router.get("/matchmentor", (req, res) => {
@@ -452,69 +452,75 @@ router.get("/matchmentor", (req, res) => {
     if (!data) {
       res.render("sign-in", { created: "" });
     } else {
-      console.log("found session");
-      // //mentor matching query
-      const interestarray = data.interest;
-      let queryarr = [];
-      for (let index = 0; index < interestarray.length; index++) {
-        queryarr.push({ interest: interestarray[index] });
+      if (data.role === "mentee") {
+        console.log("found session");
+        const interestarray = data.interest;
+        let queryarr = [];
+        for (let index = 0; index < interestarray.length; index++) {
+          queryarr.push({ interest: interestarray[index] });
+        }
+        let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
+        //console.log(query);
+        RegisterSchema.find(query, function (err, valuefound) {
+          if (!valuefound) res.render("matchmentor", { blogs: [] });
+          res.render("matchmentor", { blogs: valuefound });
+        });
+      } else {
+        res.send(
+          "<h2>Sorry requested page not found! Check url once again</h2>"
+        );
       }
-      let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
-      //console.log(query);
-      RegisterSchema.find(query, function (err, valuefound) {
-        if (!valuefound) res.render("matchmentor", { blogs: [] });
-        res.render("matchmentor", { blogs: valuefound });
+    }
+  });
+});
+
+// Book a mentor
+router.post("/order", (req, res) => {
+  RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
+    if (!data) {
+      res.render("sign-in", { created: "" });
+    } else {
+      let options = {
+        amount: 20000,
+        currency: "INR",
+      };
+      razorpay.orders.create(options, function (err, order) {
+        //console.log(order);
+        res.json(order);
       });
     }
   });
 });
 
-
-// Book a mentor : auth not added
-router.post("/order", (req, res) => {
-  RegisterSchema.findOne({ _id: req.session.userId }, function (err, data) {
-    if (!data) {
-      res.render("sign-in", { created: "" });
-    }
-    else{  
-    let options = {
-    amount: 20000,
-    currency: "INR",
-  };
-  razorpay.orders.create(options, function (err, order) {
-    //console.log(order);
-    res.json(order);
-  });
-}
-});
-});
-
 router.post("/isordercomplete", async (req, res) => {
-  RegisterSchema.findOne({ _id: req.session.userId }, async function (err, data) {
-    if (!data) {
-      res.render("sign-in", { created: "" });
-    }
-  else {  razorpay.payments
-    .fetch(req.body.razorpay_payment_id)
-    .then(async (paymentDocument) => {
-      if (paymentDocument.status == "captured") {
-    const ment= await RegisterSchema.findById(enrolledmentor);
-      // console.log(data._id);
-      // enrolledmentor="";
-      // console.log(ment.name);
-      data.enrolled.push({name:ment.name,id:enrolledmentor});
-      data.save();
-      ment.enrolled.push({name:data.name,id:data._id.toString()});
-      ment.save();
-      enrolledmentor="";
-      console.log(data.enrolled);
-      res.render("profilementee", { profileobject: data});
+  RegisterSchema.findOne(
+    { _id: req.session.userId },
+    async function (err, data) {
+      if (!data) {
+        res.render("sign-in", { created: "" });
       } else {
-        res.status(400).send("Booking unsucceful Please try again later");
+        razorpay.payments
+          .fetch(req.body.razorpay_payment_id)
+          .then(async (paymentDocument) => {
+            if (paymentDocument.status == "captured") {
+              const ment = await RegisterSchema.findById(enrolledmentor);
+              // console.log(data._id);
+              // enrolledmentor="";
+              // console.log(ment.name);
+              data.enrolled.push({ name: ment.name, id: enrolledmentor });
+              data.save();
+              ment.enrolled.push({ name: data.name, id: data._id.toString() });
+              ment.save();
+              enrolledmentor = "";
+              console.log(data.enrolled);
+              res.render("profilementee", { profileobject: data });
+            } else {
+              res.status(400).send("Booking unsucceful Please try again later");
+            }
+          });
       }
-    });
-  }
-});
+    }
+  );
 });
 
 //filter for metee page
@@ -554,7 +560,6 @@ router.post("/filter", (req, res) => {
     }
   });
 });
-
 
 // logout
 router.get("/logout", (req, res) => {
