@@ -214,24 +214,45 @@ router.post("/sendmessage/:id", async (req, res) => {
       } else {
         const id = req.params.id;
         try {
-          const ment = await RegisterSchema.findById(id);
           const message = req.body.message;
-          if (ment) {
-            ment.chatnotification = {
+          let find=false;
+        for(let i=0;i<data.chatnotification.length;i++){
+         if(data.chatnotification[i]===null) continue;
+          if(data.chatnotification[i]._id.toString()==id){
+           find=true;
+            const ment = await RegisterSchema.findById(data.chatnotification[i].fromId);
+            const chatobj= {
               from: data.name,
               fromId: data._id.toString(),
               toId: id,
               message: message,
             };
+            ment.chatnotification.push(chatobj);
             ment.save();
-            if (data.chatnotification != undefined) {
-              data.chatnotification = undefined;
-              data.save();
-            }
-            res.redirect("/");
-          } else {
-            res.status(400).send({ error: "No id provided" });
+            // data.chatnotification[i]=undefined;
+            data.chatnotification.splice(i,1);
+            data.save();
+            
+            break;
           }
+        }
+
+        //if message initiated first time
+        if(!find){
+          const ment = await RegisterSchema.findById(id);
+          if (ment) {
+            const chatobj= {
+              from: data.name,
+              fromId: data._id.toString(),
+              toId: id,
+              message: message,
+            };
+            ment.chatnotification.push(chatobj);
+            ment.save();
+        }
+      }
+            res.redirect("/chatnotifications");
+         
         } catch (error) {
           console.log(error);
         }

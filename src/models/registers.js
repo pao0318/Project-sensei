@@ -49,12 +49,12 @@ const userSchema = new mongoose.Schema({
      ],
   },
   chatnotification: {
-    type: {
+    type: [{
       from:String,
       fromId:String,
       toId:String,
       message:String
-   }
+   }]
   },
   reviews: {
     type: [
