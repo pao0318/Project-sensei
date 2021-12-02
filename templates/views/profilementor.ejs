@@ -161,10 +161,12 @@
               </div>
             </div>
             <div class="col-12 mt-4">
+              <% if(profileobject.enrolled.length>0) { %>
               <div class="mb-5 ps-3">
                 <h6 class="mb-1">Mentees Enrolled under you</h6>
                 <p class="text-sm">Progress Track</p>
               </div>
+              <% } %>
               <div class="row">
                 
              <%   for (let j =0;j<profileobject.enrolled.length;j++) { %>
@@ -208,21 +210,47 @@
                 <% } %>
               
               </div>
-              </div>
+              </div><br/>
 
-              <footer class="footer py-4">
-                <div class="container-fluid">
-                  <div class="row align-items-center justify-content-center">
-                    <div class="col-12 mb-lg-0 mb-4">
-                      <div class="copyright text-center text-sm text-muted">
-                        made with <i class="fa fa-heart"></i> by
-                        <a class="font-weight-bold" target="_blank">Team Nutella</a>
+
+                  <div class="row gx-4 mb-2">
+                    <h6 class="mb-0 text-2xl" style="padding-left: 35px;">Testimonial Section</h6>
+                  <section style="padding-top: 10px;">
+                    <div class="container">
+                      <div class="row">
+                        <% for (let i =0;i<profileobject.reviews.length;i++) { %>
+                          <div class="col-lg-3 col-md-8">
+                            <div class="card bg-gradient-primary">
+                              <div class="card-body">
+                                <h5 class="mt-0 text-white"><%= profileobject.reviews[i].review %></h5>
+                                <div class="author align-items-center">
+                                  <div class="name">
+                                    <p style="margin-bottom: 0;color: rgb(226, 226, 226);"> @<%= profileobject.reviews[i].from %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <% } %>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </footer>
+                  </section>
+
+
+            
   </div>
+  <footer class="footer py-4">
+    <div class="container-fluid">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-12 mb-lg-0 mb-4">
+          <div class="copyright text-center text-sm text-muted">
+            made with <i class="fa fa-heart"></i> by
+            <a class="font-weight-bold" target="_blank">Team Nutella</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
   
 
   <!--   Core JS Files   -->
