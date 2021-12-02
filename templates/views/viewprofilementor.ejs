@@ -161,8 +161,35 @@
           </div>
         </div>
       </div>
-    </div>
     
+    
+
+
+    <div class="card card-body mx-3 mx-md-4 mt-4">
+      <div class="row gx-4 mb-2">
+        <h6 class="mb-0 text-2xl" style="padding-left: 35px;">Testimonial Section</h6>
+  <section style="padding-top: 10px;">
+    <div class="container">
+      <div class="row">
+        <% for (let i =0;i<profileobject.reviews.length;i++) { %>
+          <div class="col-lg-3 col-md-8 pt-3">
+            <div class="card bg-gradient-primary">
+              <div class="card-body">
+                <h5 class="mt-0 text-white"><%= profileobject.reviews[i].review %></h5>
+                <div class="author align-items-center">
+                  <div class="name">
+                    <p style="margin-bottom: 0;color: rgb(226, 226, 226);"> @<%= profileobject.reviews[i].from %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    </div>
+    </section>
+  </div>
+    </div>
   </div>
 
   <footer class="footer py-4">
