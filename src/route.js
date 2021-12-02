@@ -44,7 +44,7 @@ router.get("/", (req, res) => {
               });
             });
           }
-        });
+        }).sort({"experience":-1});
       }
       //mentee
       else {
@@ -58,7 +58,7 @@ router.get("/", (req, res) => {
               });
             });
           }
-        });
+        }).sort({"experience":-1});
       }
     }
   });
@@ -371,7 +371,7 @@ router.post("/login", async (req, res, next) => {
               });
             }
           );
-        });
+        }).sort({"experience":-1});
       }
       //mentee
       else {
@@ -385,7 +385,7 @@ router.post("/login", async (req, res, next) => {
               });
             }
           );
-        });
+        }).sort({"experience":-1});
       }
     } else {
       console.log("invalid password");
@@ -481,12 +481,12 @@ router.get("/matchmentor", (req, res) => {
         for (let index = 0; index < interestarray.length; index++) {
           queryarr.push({ interest: interestarray[index] });
         }
-        let query = { $and: [{ $or: queryarr }, { role: "mentor" }] };
+        let query = { $and: [{ $or: queryarr }, { role: "mentor" },{ experience: { $gt: 7 }} ] };
         //console.log(query);
         RegisterSchema.find(query, function (err, valuefound) {
           if (!valuefound) res.render("matchmentor", { blogs: [] });
           res.render("matchmentor", { blogs: valuefound });
-        });
+        }).sort({"experience":-1});
       } else {
         res.send(
           "<h2>Sorry requested page not found! Check url once again</h2>"
@@ -565,7 +565,7 @@ router.post("/filter", (req, res) => {
               });
             });
           }
-        });
+        }).sort({"experience":-1});
       } else {
         RegisterSchema.find(query, function (err, valuefound) {
           if (err) console.log(err);
@@ -577,7 +577,7 @@ router.post("/filter", (req, res) => {
               });
             });
           }
-        });
+        }).sort({"experience":-1});
       }
     }
   });
