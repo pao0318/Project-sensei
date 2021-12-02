@@ -481,7 +481,7 @@ router.get("/matchmentor", (req, res) => {
         for (let index = 0; index < interestarray.length; index++) {
           queryarr.push({ interest: interestarray[index] });
         }
-        let query = { $and: [{ $or: queryarr }, { role: "mentor" },{ experience: { $gt: 7 }} ] };
+        let query = { $and: [{ $or: queryarr }, { role: "mentor" },{ experience: { $gt: 9 }} ] };
         //console.log(query);
         RegisterSchema.find(query, function (err, valuefound) {
           if (!valuefound) res.render("matchmentor", { blogs: [] });

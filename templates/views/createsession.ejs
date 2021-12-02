@@ -114,6 +114,7 @@
               <option value="DevOps">DevOps</option>
               <option value="Development">Development</option>
               <option value="Design">Design</option>
+              <option value="Career">Career</option>
             </select>
           </div>
         </div>
@@ -132,8 +133,8 @@
           <div class="col-4 col-md-4"><div class="card" style="width: 23rem; display: flex; margin-bottom: 20px;">
             <div class="card-body">
               <h5 class="card-title"><%= session[i].name %></h5>
-              <p class="card-text">Specialization : <%= session[i].description %></p>
-              <a href="#" class="btn btn-primary">Book Session</a>
+              <p class="card-text">Date : <%= session[i].date %></p>
+              <p class="card-text mt-n3">Specialization : <%= session[i].description %></p>
             </div>
           </div></div>
     <% } %>
