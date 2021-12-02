@@ -274,8 +274,14 @@ router.post("/addprogress/:id", async (req, res) => {
           const ment = await RegisterSchema.findById(id);
           const progress = req.body.progress;
           if (ment) {
-            ment.progresswidth = progress;
-            ment.save();
+            for(let i=0;i<ment.enrolled.length;i++){
+               if(ment.enrolled[i].id==data._id.toString()){
+                 console.log(progress)
+                 ment.enrolled[i].progresswidth = progress;
+                 ment.save();
+                 break;
+               }
+             }
             res.redirect("/");
           } else {
             res.status(400).send({ error: "No id provided" });
@@ -529,9 +535,9 @@ router.post("/isordercomplete", async (req, res) => {
               // console.log(data._id);
               // enrolledmentor="";
               // console.log(ment.name);
-              data.enrolled.push({ name: ment.name, id: enrolledmentor });
+              data.enrolled.push({ name: ment.name, id: enrolledmentor, progresswidth: 0 });
               data.save();
-              ment.enrolled.push({ name: data.name, id: data._id.toString() });
+              ment.enrolled.push({ name: data.name, id: data._id.toString(), progresswidth: 0  });
               ment.save();
               enrolledmentor = "";
               console.log(data.enrolled);

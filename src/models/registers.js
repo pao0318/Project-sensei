@@ -44,7 +44,8 @@ const userSchema = new mongoose.Schema({
     type: [
       {
         name:String,
-        id:String
+        id:String,
+        progresswidth:Number
      }
      ],
   },
@@ -65,9 +66,6 @@ const userSchema = new mongoose.Schema({
       review:String
    }
   ]
-  },
-  progresswidth: {
-    type:Number
   }
 });
 
