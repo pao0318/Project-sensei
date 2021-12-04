@@ -40,8 +40,7 @@ Contents
 
 ### Features Added
 ---
-<ol>
-![search](https://user-images.githubusercontent.com/68842515/144702889-4bcac9cc-c8db-487c-b090-a0d0d4b1f637.jpeg)
+![search](https://user-images.githubusercontent.com/68842515/144702889-4bcac9cc-c8db-487c-b090-a0d0d4b1f637.jpeg) 
 <li>Search - Mentees can add filters/tags on their own needs
 and search for mentors accordingly. This has been
 provided to give mentees a say in the process,
@@ -78,4 +77,4 @@ mentees will pay the fees while
 booking the mentor for the one-onone mentoring session. It is implemented using Razorpay
 API where the payment can be
 done via card,upi,bank details etc.</li></br>
-</ol>
+
