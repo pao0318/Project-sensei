@@ -24,3 +24,15 @@ Contents
 
 
 ### Tech-Stacks Used
+---
+<ol>
+    <li> MongoDB
+        <li>Node
+            <br/>
+            <li>Express
+                 <br/>
+                <li>EJS
+                     <br/>
+                    <li>API (RAZORPAY API)
+                         <br/>
+    </ol>
