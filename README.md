@@ -94,4 +94,4 @@ Some of the snapshots of website.
 
 ![image (2)](https://user-images.githubusercontent.com/68842515/144702992-31c0e98a-71b0-4b5b-b314-b8d4f4b44561.png) - Progress Track
 
-![image (3)](https://user-images.githubusercontent.com/68842515/144703002-52aadafc-e415-47b1-b832-cf471054686a.png)
+![image (3)](https://user-images.githubusercontent.com/68842515/144703002-52aadafc-e415-47b1-b832-cf471054686a.png) - Communication tools
