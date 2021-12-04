@@ -33,6 +33,6 @@ Contents
                  <br/>
                 <li>EJS
                      <br/>
-                    <li>API (RAZORPAY API)
+                    <li>API (RAZORPAY PAYMENT API)
                          <br/>
     </ol>
