@@ -41,10 +41,8 @@ Contents
 ### Features Added
 ---
 <ol>
-<li>Search - 
-    ![search](https://user-images.githubusercontent.com/68842515/144702889-4bcac9cc-c8db-487c-b090-a0d0d4b1f637.jpeg)
-
-    Mentees can add filters/tags on their own needs
+![search](https://user-images.githubusercontent.com/68842515/144702889-4bcac9cc-c8db-487c-b090-a0d0d4b1f637.jpeg)
+<li>Search - Mentees can add filters/tags on their own needs
 and search for mentors accordingly. This has been
 provided to give mentees a say in the process,
 allowing them to select a particular mentor.</li></br>
