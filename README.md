@@ -23,7 +23,18 @@ Contents
     + ` npm install `
     + ` node index.js`
 3. Open the localhost link.
-
+`.env file hasnt been pushed`
+<br/>
+You can provide your own env file of your razorpay account and mongodb database by specifying details in the given format.
+<br/>
+MONGO_URL=
+<br/>
+PORT=
+<br/>
+KEY_ID=
+<br/>
+KEY_SECRET=
+<br/>
 
 ### Tech-Stacks Used
 ---
