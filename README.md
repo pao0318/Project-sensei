@@ -2,7 +2,7 @@
 # Project-sensei
 ### `THEME : EKLAVYA`
 
-`Project-Sensei` is a mentor match platform where mentor and mentees can interact with each other. <br/>
+`Project-Sensei` is a platform that enables students to find a perfect mentor curated to their needs. <br/>
 Presented by <b>Team Nutella</b>
 
 
