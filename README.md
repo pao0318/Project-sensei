@@ -56,6 +56,7 @@ mentor is recommended to them.
 In order to satisfy the needs of the mentees,
 matching the right participants together is an
 important step for best results.</li></br>
+![image (1)](https://user-images.githubusercontent.com/68842515/144702984-b65ea8d2-e4ce-4244-9342-766febd7bdfd.png)
 <li>Communication tools - A chat feature on the website, where mentors and
 mentees can communicate and initiate conversation.
 As effective communication is essential to building a
@@ -90,7 +91,6 @@ done via card,upi,bank details etc.</li></br>
 Some of the snapshots of website.
 </br>
 
-![search](https://user-images.githubusercontent.com/68842515/144702889-4bcac9cc-c8db-487c-b090-a0d0d4b1f637.jpeg) 
 
 ![image (1)](https://user-images.githubusercontent.com/68842515/144702984-b65ea8d2-e4ce-4244-9342-766febd7bdfd.png)
 
