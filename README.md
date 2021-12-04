@@ -12,7 +12,7 @@ Contents
  * [Installation](#installation)
  * [Tech-Stacks Used](#Tech-Stacks-Used)
  * [Features Added](#Features-Added)
- * [Snapshota](#Snapshots)
+ * [Snapshots](#Snapshots)
 
 
 ### Installation
