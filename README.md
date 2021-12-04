@@ -46,7 +46,6 @@ You can provide your own env file of your razorpay account and mongodb database.
 ---
 <ol>
     
-![search](https://user-images.githubusercontent.com/68842515/144702889-4bcac9cc-c8db-487c-b090-a0d0d4b1f637.jpeg) 
 <li>Search - Mentees can add filters/tags on their own needs
 and search for mentors accordingly. This has been
 provided to give mentees a say in the process,
@@ -56,7 +55,6 @@ mentor is recommended to them.
 In order to satisfy the needs of the mentees,
 matching the right participants together is an
 important step for best results.</li></br>
-![image (1)](https://user-images.githubusercontent.com/68842515/144702984-b65ea8d2-e4ce-4244-9342-766febd7bdfd.png)
 <li>Communication tools - A chat feature on the website, where mentors and
 mentees can communicate and initiate conversation.
 As effective communication is essential to building a
@@ -90,10 +88,10 @@ done via card,upi,bank details etc.</li></br>
 ---
 Some of the snapshots of website.
 </br>
+![search](https://user-images.githubusercontent.com/68842515/144702889-4bcac9cc-c8db-487c-b090-a0d0d4b1f637.jpeg) - Search Feature
 
+![image (1)](https://user-images.githubusercontent.com/68842515/144702984-b65ea8d2-e4ce-4244-9342-766febd7bdfd.png) - Discussion forum
 
-![image (1)](https://user-images.githubusercontent.com/68842515/144702984-b65ea8d2-e4ce-4244-9342-766febd7bdfd.png)
-
-![image (2)](https://user-images.githubusercontent.com/68842515/144702992-31c0e98a-71b0-4b5b-b314-b8d4f4b44561.png)
+![image (2)](https://user-images.githubusercontent.com/68842515/144702992-31c0e98a-71b0-4b5b-b314-b8d4f4b44561.png) - Progress Track
 
 ![image (3)](https://user-images.githubusercontent.com/68842515/144703002-52aadafc-e415-47b1-b832-cf471054686a.png)
